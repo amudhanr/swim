@@ -15,9 +15,10 @@ class CreateMeetsTable extends Migration
     {
         Schema::create('meets', function (Blueprint $table) {
             $table->increments('id');
+	    $table->string('name');
             $table->date('start_date');
 	    $table->date('end_date');
-	    $table->increments('host_id');
+	    $table->increments('hosts_id');
 	    $table->timestamps();
         });
     }
