@@ -13,9 +13,11 @@ class CreateMeetsTable extends Migration
     {
         Schema::create('days', function (Blueprint $table) {
             $table->increments('id');
-	    $table->increments('hosts_id');
+	    $table->integer('meets_id')->unsigned;
+	    $table->foreign('meets_id')->references('id')->on('meets');
             $table->string('youtube_link');
 	    $table->date('date');
+	    $table->string('slug', 50);
             $table->timestamps();
         });
     }
