@@ -15,7 +15,9 @@ class CreateMeetsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->enum('gender', ['M','F']);
-            $table->increments('days_id');
+            $table->integer('days_id')->unsigned();
+            $table->foreign('days_id')->references('id')->on('days');
+            $table->string('slug', 50);
             $table->timestamps();
         });
     }
