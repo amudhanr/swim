@@ -14,7 +14,8 @@ class CreateMeetsTable extends Migration
         Schema::create('heats', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->increments('events_id');
+            $table->integer('events_id')->unsigned();
+            $table->foreign('events_id')->references('id')->on('events');
             $table->timestamps();
         });
     }
