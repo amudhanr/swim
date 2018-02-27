@@ -18,7 +18,9 @@ class CreateMeetsTable extends Migration
 	    $table->string('name');
             $table->date('start_date');
 	    $table->date('end_date');
-	    $table->increments('hosts_id');
+	    $table->integer('hosts_id')->unsigned;
+	    $table->foreign('hosts_id')->references('id')->on('hosts');
+	    $table->string('slug', 50);
 	    $table->timestamps();
         });
     }
