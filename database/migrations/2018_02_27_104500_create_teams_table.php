@@ -11,7 +11,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('team', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('short_name');
@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('contact_person');
             $table->string('contact_email'); 
             $table->string('contact_phone'); 
-            $table->string('slug'); 
+            $table->string('slug', 50); 
             $table->timestamps();
          
         });
@@ -31,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team');
+        Schema::dropIfExists('teams');
     }
 }
