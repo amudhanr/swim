@@ -18,7 +18,7 @@ class CreateSwimmersTable extends Migration
             $table->date('date_of_birth');
             $table->enum('gender', ['M', 'F']);
             $table->integer('team_id')->unsigned();
-            $table->foreign('team_id')->reference('id')->on('teams');
+            $table->foreign('team_id')->references('id')->on('teams');
             $table->string('slug', 50);
             $table->timestamps();
         });
