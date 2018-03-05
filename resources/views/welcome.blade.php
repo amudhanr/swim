@@ -2,12 +2,22 @@
 
 @section('content')
 <div class="container">
-	<div class="row">
+    <div class="row">
     	<h1> BAIS Swim! </h1>
         <p> Most Recent Activity:</p>
         <p> IISSAC Day 1 </p> <p> Date: March 1, 2017 </p>
     </div>
     
+    <div class="row">
+    	<div class="col-sm-6" style="background-color:lavender;">	
+        	<h2 class ="text-center"> Ranking </h2>
+            
+         </div>
+        <div class="col-sm-6" style="background-color:lavender;">
+       		<h2 class ="text-center"> Video </h2>
+            <iframe width="450" height="340" src ="https://www.youtube.com/watch?v=lMM61mH0dJo" frameborder="0">
+        </div>
+     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
