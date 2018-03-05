@@ -15,15 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/meet-info/', function () {
-	return view('meet-info');
+Route::get('/meets-info/', function () {
+	return view('meets-info');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/admin/host', 'HostController'); 
+Route::resource('/admin/hosts', 'HostsController'); 
 
-Route::resource('/admin/meet', 'MeetController'); 
+Route::resource('/admin/meets', 'MeetsController'); 
 
