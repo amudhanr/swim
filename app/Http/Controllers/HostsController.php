@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Host;
 use Illuminate\Http\Request;
 
 class HostsController extends Controller
@@ -23,7 +24,7 @@ class HostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('hosts.create');//
     }
 
     /**
@@ -34,7 +35,27 @@ class HostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       /**$rules = array(
+		'name'		=> 'required',
+		'address'	=> 'required|email'
+	);
+
+	$validator = Validator::make(Input::all(), $rule);
+
+	if ($validator->fails()) {
+		return Redirect::to('admin/hosts/create')
+			->withErrors($validator)
+			->withInput;
+	} else {
+	**/
+	$hosts = new Host;
+	$hosts->name	= $request->name;
+	$hosts->address = $request->address;
+	$hosts->save();
+
+	return "DONE!";
+	//return Redirect:;to('              ');
+	
     }
 
     /**
