@@ -54,7 +54,6 @@ class HostsController extends Controller
 	$hosts->save();
 
 	return "DONE!";
-	//return Redirect:;to('              ');
 	
     }
 
