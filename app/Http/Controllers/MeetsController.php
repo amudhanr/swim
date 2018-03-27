@@ -35,6 +35,12 @@ class MeetsController extends Controller
     public function store(Request $request)
     {
         //
+    $hosts = new Meet;
+	$hosts->name	= $request->name;
+	$hosts->address = $request->address;
+	$hosts->save();
+
+	return "DONE!";
     }
 
     /**
