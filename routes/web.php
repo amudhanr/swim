@@ -37,4 +37,6 @@ Route::resource('/admin/events', 'EventsController'):
 
 Route::resource('/admin/heats', 'HeatsController'):
 
+Route::resource('/admin/teams', 'TeamsController'):
+
 Route::resource('/admin/lanes', 'LanesController'):
