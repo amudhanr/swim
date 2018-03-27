@@ -11,9 +11,6 @@
       
       <input type="text" name="slug" placeholder="unique identifier for the meet">
       
-      <input type="text" name="start_date" placeholder="Start Date for the Meet">
-      
-      <input type="text" name="end_date" placeholder="End Date for the Meet">
       
       <select name="hosts_id">
           <option value="##">Hosts Name</option>
