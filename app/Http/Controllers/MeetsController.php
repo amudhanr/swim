@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Host; 
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller
@@ -23,7 +24,7 @@ class MeetsController extends Controller
      */
     public function create()
     {
-        //
+        return view('meets.create');//
     }
 
     /**
@@ -34,21 +35,35 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    $hosts = new Meet;
-	$meets->name	= $request->name;
-	$meets->address = $request->address;
-	$meets->save();
-
-	return "DONE!";
-    }
-
+        /**$rules = array( 
+                'name'          => 'required
+                'address'	=> 'required|email'
+	);
+	
+            $validator = Validator::make(Input::all(), $rule);
+	
+            if ($validator->fails()) {
+		        return Redirect::to('admin/hosts/create')
+			        ->withErrors($validator)
+			        ->withInput;
+	} else {
+    **/
+    
+    $meets = new Meet; 
+    $meets->name     = $request->name; 
+    $meets->address  = $request->address; 
+    $hosts->save(); 
+    
+    return "DONE!"; 
+    
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */    
+    } 
+    
     public function show($id)
     {
         //
