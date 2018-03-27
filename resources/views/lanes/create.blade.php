@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <div class="row">
-    <form method="post" action="/admin/days/create">
+    <form method="post" action="/admin/lanes/create">
     
       <input type="text" name="lane_number" placeholder="Enter Lane Number.">
       
