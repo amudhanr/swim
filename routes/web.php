@@ -31,3 +31,10 @@ Route::resource('/admin/hosts', 'HostsController');
 
 Route::resource('/admin/meets', 'MeetsController'); 
 
+Route::resource('/admin/days', 'DaysController'):
+
+Route::resource('/admin/events', 'EventsController'):
+
+Route::resource('/admin/heats', 'HeatsController'):
+
+Route::resource('/admin/lanes', 'LanesController'):
