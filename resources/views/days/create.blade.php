@@ -5,11 +5,11 @@
   <div class="row">
     <form method="post" action="/admin/days/create">
     
-      <input type="text" name="name" placeholder="Enter name">
+      <input type="text" name="youtube_link" placeholder="Enter YouTube Link">
       
-      <input type="text" name="address" placeholder="Enter address">
-    // have not changed the information yet; 
-      <input type="submit" name="submit">
+      <input type="text" name="slug" placeholder="Enter slug">
+
+      <input type="text" name="date" placeholder="Enter date">
       
     </form>
   </div>
