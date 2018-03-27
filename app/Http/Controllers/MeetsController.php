@@ -36,9 +36,9 @@ class MeetsController extends Controller
     {
         //
     $hosts = new Meet;
-	$hosts->name	= $request->name;
-	$hosts->address = $request->address;
-	$hosts->save();
+	$meets->name	= $request->name;
+	$meets->address = $request->address;
+	$meets->save();
 
 	return "DONE!";
     }
