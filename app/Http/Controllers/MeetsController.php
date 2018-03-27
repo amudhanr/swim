@@ -52,7 +52,11 @@ class MeetsController extends Controller
     $meets = new Meet; 
     $meets->name     = $request->name; 
     $meets->address  = $request->address; 
-    $hosts->save(); 
+    $meets->slug     = stripslashes(trim($request->slug));
+    $meets->start_date = $request->start_date;
+    $meets->end_date = $request->end_date;
+    $meets->hosts_id = $request->hosts_id;
+    $meets->save(); 
     
     return "DONE!"; 
     
