@@ -7,15 +7,15 @@
  
     <input type="text" name="name" placeholder="Enter name">
     
-    <input type="text" name="shortName" placeholder="Enter shortName">
+    <input type="text" name="short_name" placeholder="Enter shortName">
     
     <input type="text" name="address" placeholder="Enter address">
     
-    <input type="text" name="contactPerson" placeholder="Enter contactPerson">
+    <input type="text" name="contact_person" placeholder="Enter contactPerson">
         
-    <input type="text" name="contactEmail" placeholder="Enter contactEmail">
+    <input type="text" name="contact_email" placeholder="Enter contactEmail">
             
-    <input type="text" name="contactPhone" placeholder="Enter contactPhone">
+    <input type="text" name="contact_phone" placeholder="Enter contactPhone">
     
     <input type="text" name="slug" placeholder="Enter slug">
     
