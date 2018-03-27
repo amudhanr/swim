@@ -43,11 +43,11 @@ class TeamsController extends Controller
 	**/
 	$teams = new Team;
 	$teams->name	= $request->name;
-	$teams->shortName = $request->shortName;
+	$teams->short_name = $request->short_name;
 	$teams->address = $request->address;
-	$teams->contactPerson = $request->contactPerson;
-	$teams->contactEmail = $request->contactEmail;
-	$teams->contactPhone = $request->contactPhone;
+	$teams->contact_person = $request->contact_person;
+	$teams->contact_email = $request->contact_email;
+	$teams->contact_phone = $request->contact_phone;
 	$teams->slug = $request->slug;
 	  
 	$teams->save();
