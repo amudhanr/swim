@@ -40,3 +40,7 @@ Route::resource('/admin/heats', 'HeatsController');
 Route::resource('/admin/teams', 'TeamsController');
 
 Route::resource('/admin/lanes', 'LanesController');
+
+Route::get('/uploadfile','UploadFileController@index');
+
+Route::post('/uploadfile','UploadFileController@showUploadFile');
