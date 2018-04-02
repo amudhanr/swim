@@ -48,7 +48,7 @@ class MeetsController extends Controller
 			        ->withInput;
 	} else {
     **/
-    
+    </br> 
     $meets = new Meet; 
     $meets->name     = $request->name; 
     $meets->address  = $request->address; 
