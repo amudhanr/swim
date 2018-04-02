@@ -6,7 +6,7 @@
     <form method="post" action="/admin/meets/create">
     
       <input type="text" name="name" placeholder="Enter name">
-      
+      </br>
       <input type="text" name="address" placeholder="Enter address">
       
       <input type="text" name="slug" placeholder="unique identifier for the meet">
