@@ -50,7 +50,7 @@ class MeetsController extends Controller
     **/
    
     $meets = new Meet; 
-    $meets->name     = $request->name; </br>
+    $meets->name     = $request->name;
     $meets->address  = $request->address; 
     $meets->slug     = stripslashes(trim($request->slug));
     $meets->start_date = $request->start_date;
