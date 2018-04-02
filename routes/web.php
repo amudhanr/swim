@@ -43,4 +43,4 @@ Route::resource('/admin/lanes', 'LanesController');
 
 Route::get('/uploadfile','UploadFileController@index');
 
-Route::resource('/admin/uploadfile','UploadFileController@showUploadFile');
+Route::post('/uploadfile','UploadFileController@showUploadFile');
