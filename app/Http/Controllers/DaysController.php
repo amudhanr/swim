@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
-use App\Teams;
+use App\Day;
 use Illuminate\Http\Request;
-class TeamsController extends Controller
+class DaysController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +19,15 @@ class TeamsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    
     {
         return view('days.create');//
     }
-   
+
+    public function store(Request $request)
+	{
 	$days = new Day;
-  $days->meets_id = $request->meets_id;
+  	$days->meets_id = $request->meets_id;
 	$days->youtube_link	= $request->youtube_link;
 	$days->date = $request->date;
 	$days->slug = $request->slug;

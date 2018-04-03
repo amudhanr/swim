@@ -1,10 +1,5 @@
-@extends('layouts.app')
 
-@section('content')
-<html>
-   <body>
-      
-      <?php
+     <?php
          echo Form::open(array('url' => '/uploadfile','files'=>'true'));
          echo 'Select the file to upload.';
          echo Form::file('image');
@@ -12,7 +7,3 @@
          echo Form::close();
       ?>
    
-   </body>
-</html>
-
-@endsection
