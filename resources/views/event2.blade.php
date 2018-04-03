@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class = "container">
-    	<h2> Event #1 25m freestyle Age 10-11 (boys) </h2>
+    	<h2> Event #2 25m freestyle Age 10-11 (girls) </h2>
         <table class = "table">
         	<thead>
             	<tr>
