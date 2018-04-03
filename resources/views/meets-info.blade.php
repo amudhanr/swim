@@ -6,8 +6,8 @@
 	<div class="row">
      <div class="col-sm-8" style="background-color:lavenderblush;">
      <h4> DAY 1</h4>
-     <p> {{Html::link('/event1', 'Event #1 25m freestyle Age 10-11 (boys)',)}}</p>
-     <p>Event #2 25m freestyle Age 10-11 (girls)</p>
+     <p> {{Html::link('/event1', 'Event #1 25m freestyle Age 10-11 (boys)')}}</p>
+     <p> {{Html::link('/event2', 'Event #2 25m freestyle Age 10-11 (girls)')}}</p>
      <p>Event #3 50m freestyle Age 12-13 (boys)</p>
      <p>Event #4 50m freestyle Age 12-13 (girls)</p>
      <p>Event #5 50m freestyle Age 14-15 (boys)</p>
