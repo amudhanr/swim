@@ -6,8 +6,6 @@
  {{ csrf_field() }}
  
     <input type="text" name="name" placeholder="Enter name">
-    
-    <input type="text" name="id" placeholder="Enter id">
 
     <input type="text" name="address" placeholder="Enter address">
     
