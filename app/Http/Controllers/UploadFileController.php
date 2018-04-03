@@ -35,3 +35,4 @@ class UploadFileController extends Controller {
       $file->move($destinationPath,$file->getClientOriginalName());
    }
 }
+?>
