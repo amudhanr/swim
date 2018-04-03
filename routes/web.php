@@ -23,6 +23,14 @@ Route::get('/event/', function () {
 	return view('event');
 });
 
+Route::get('/event1/', function () {
+	return view('event1');
+});
+
+Route::get('/event2/', function () {
+	return view('event2');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
