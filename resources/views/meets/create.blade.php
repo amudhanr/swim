@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <form method="post" action="/admin/meets/create">
-<<<<<<< HEAD
         <div class="form-group">
             <label for="name">Enter Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
@@ -24,23 +23,7 @@
             <label for="end_date"> Enter End Date for the Meet</label>
             <input type="text" name="end_date" id="end_date" placeholder="End Date for the Meet" class="form-control">
         </div>
-=======
-    
-      <input type="text" name="name" placeholder="Enter name">
-      </br>
-      <input type="text" name="address" placeholder="Enter address">
-      
-      <input type="text" name="slug" placeholder="unique identifier for the meet">
-      
-      <input type="text" name="start_date" placeholder="Start Date for the Meet">
-      
-      <input type="text" name="end_date" placeholder="End Date for the Meet">
-      
->>>>>>> 253c7d771f8656ab97c7f4fb8b597b052953f955
-      <select name="hosts_id">
-          <option value="##">Hosts Name</option>
-          //FIXME: The above options should be generated using a for loop based on the values stored in the hosts table
-      </select>
+	{{!! Form::select('hosts', $hosts, null) !!}}
       <div class="form-group">
       <input type="submit" name="submit"> 
       </div>
