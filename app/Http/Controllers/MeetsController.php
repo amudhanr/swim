@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Host; 
+use App\Host;
+use App\Meet;
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller
@@ -24,7 +25,8 @@ class MeetsController extends Controller
      */
     public function create()
     {
-        return view('meets.create');//
+	$hosts = Host::pluck('name','id');
+        return view('meets.create', ['hosts' => $hosts]);//
     }
 
     /**
@@ -35,39 +37,25 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-        /**$rules = array( 
-                'name'          => 'required
-                'address'	=> 'required|email'
-	);
-	
-            $validator = Validator::make(Input::all(), $rule);
-	
-            if ($validator->fails()) {
-		        return Redirect::to('admin/hosts/create')
-			        ->withErrors($validator)
-			        ->withInput;
-	} else {
-    **/
-   
-    $meets = new Meet; 
-    $meets->name     = $request->name;
-    $meets->address  = $request->address; 
-    $meets->slug     = stripslashes(trim($request->slug));
-    $meets->start_date = $request->start_date;
-    $meets->end_date = $request->end_date;
-    $meets->hosts_id = $request->hosts_id;
-    $meets->save(); 
-    
-    return "DONE!"; 
-    
+        $meets = new Meet;
+        $meets->name     = $request->name;
+        $meets->address  = $request->address;
+        $meets->slug     = stripslashes(trim($request->slug));
+        $meets->start_date = $request->start_date;
+        $meets->end_date = $request->end_date;
+        $meets->hosts_id = $request->hosts_id;
+        $meets->save();
+
+        return "DONE!";
+        //
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */    
-    } 
-    
+     */
     public function show($id)
     {
         //
@@ -95,7 +83,7 @@ class MeetsController extends Controller
     {
         //
     }
- 
+
     /**
      * Remove the specified resource from storage.
      *
