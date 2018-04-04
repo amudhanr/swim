@@ -24,6 +24,8 @@
             <input type="text" name="end_date" id="end_date" placeholder="End Date for the Meet" class="form-control">
         </div>
 	{{!! Form::select('hosts', $hosts, null) !!}}
+    
+      
       <div class="form-group">
       <input type="submit" name="submit"> 
       </div>
