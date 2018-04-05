@@ -23,9 +23,10 @@
             <label for="end_date"> Enter End Date for the Meet</label>
             <input type="text" name="end_date" id="end_date" placeholder="End Date for the Meet" class="form-control">
         </div>
-	{{!! Form::select('hosts', $hosts, null) !!}}
-    
-      
+        <div class="form-group">
+            <label for="hosts">Host Location</label>
+	    {!! Form::select('hosts', $hosts, null, array('class' => "form-control")) !!}
+        </div>
       <div class="form-group">
       <input type="submit" name="submit"> 
       </div>
