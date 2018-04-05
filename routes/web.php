@@ -11,6 +11,8 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -33,24 +35,25 @@ Route::get('/event2/', function () {
 	return view('event2');
 });
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/admin/hosts', 'HostsController'); 
 
-Route::resource('/admin/meets', 'MeetsController'); 
+Route::resource('/admin/meets', 'MeetsController');
+//Route::resource('/admin/meets', 'MeetsController'); 
 
-Route::resource('/admin/days', 'DaysController');
-
-Route::resource('/admin/events', 'EventsController');
-
-Route::resource('/admin/heats', 'HeatsController');
-
-Route::resource('/admin/teams', 'TeamsController');
-
-Route::resource('/admin/lanes', 'LanesController');
+//Route::resource('/admin/days', 'DaysController');
+//
+//Route::resource('/admin/events', 'EventsController');
+//
+//Route::resource('/admin/heats', 'HeatsController');
+//
+//Route::resource('/admin/teams', 'TeamsController');
+//
+//Route::resource('/admin/lanes', 'LanesController');
 
 Route::get('/uploadfile','UploadFileController@index');
 
 Route::post('/uploadfile','UploadFileController@showUploadFile');
+
+Auth::routes();
