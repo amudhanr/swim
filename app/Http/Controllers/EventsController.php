@@ -12,13 +12,13 @@ class EventsController extends Controller
 
     public function index($meet_id) {
         $days = Meets::find($meet_id)->days;
-        $days_id = array();
+        $events = array();
         foreach ($days as $day) {
             var_dump($day->id);
-            $days_id[] = $day->id;
+            $events[] = Days::find($day->id)->events;
         }
-        $events = Days::find(1)->events;
         var_dump($events);
-        die("asdfadsf");
+	return view('meets.index', ['events' => $events, 'days' => $days]);
+        //FIXME: need to edit the above foreach loop to group the events by day
     }
 }
