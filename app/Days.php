@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Days extends Model
 {
     public function meets() {
-        return $this->hasOne('App\Meets');
+        return $this->belongsTo('App\Meets');
     }
 
     public function events() {
