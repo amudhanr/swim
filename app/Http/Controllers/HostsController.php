@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Host;
+use App\Hosts;
 use Illuminate\Http\Request;
 
 class HostsController extends Controller
