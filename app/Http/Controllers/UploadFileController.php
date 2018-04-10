@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Exception;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -39,6 +40,7 @@ class UploadFileController extends Controller {
             $this->processUploadedFile($file);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage(); 
+            die ($errorMessage);
            //FIXME: pass the above error message to the view and display it on the view 
         }
     }
@@ -57,4 +59,3 @@ class UploadFileController extends Controller {
             // if not duplicate the insert into the approprate tables
     }
 }
-?>
