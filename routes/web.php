@@ -18,8 +18,10 @@ Route::get('/', function () {
 });
 
 Route::get('/meets-info/', function () {
-	return view('meets-info');
+	return view('meets.index');
 });
+
+Route::get('/meets/m/{meet_id}', ['uses' => 'EventsController@index']);
 
 Route::get('/event/', function () {
 	return view('event');
@@ -32,6 +34,12 @@ Route::get('/event1/', function () {
 Route::get('/event2/', function () {
 	return view('event2');
 });
+
+Route::get('/event3/', function () {
+	return view('event3');
+});
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
