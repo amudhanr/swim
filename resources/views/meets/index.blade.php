@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="container">
+
+@foreach ($data as $day=>$events)
+<p>{{ $day }}</p>
+    @foreach ($events as $event)
+    @php 
+        var_dump($event); 
+    @endphp
+    @endforeach
+@endforeach
+
 <h1 class ="text-center">MAIN EVENT</h1>
 	<div class="row">
      <div class="col-sm-8" style="background-color:lavenderblush;">
