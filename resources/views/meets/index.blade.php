@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class ="text-center">MAIN EVENT</h1>
+    <h1 class ="text-center">{{ $meet->name }}</h1>
     @foreach ($events as $day=>$eventData)
     <div class="row">
         <h4>DAY: {{ $day }}</h4>
