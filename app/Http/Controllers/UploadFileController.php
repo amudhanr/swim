@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Exception;
+use Excel;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -34,10 +35,12 @@ class UploadFileController extends Controller {
         //Move Uploaded File
         $destinationPath = storage_path('app');
           
+	$newFilePath = $destinationPath . "/" . $file->getClientOriginalName();
         $file->move($destinationPath,$file->getClientOriginalName());
+	echo '<p>File Real Path, after Move: ' . $newFilePath . '</p>';
 
         try {
-            $this->processUploadedFile($file);
+            $this->processUploadedFile($newFilePath);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage(); 
             die ($errorMessage);
@@ -49,13 +52,20 @@ class UploadFileController extends Controller {
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
-        }
+	    die ();
+        	}
+
         //check to see if the columns match what you are looking for
-        
-        //loop through each line of the file and extract data into an array
-        
+	$rows = Excel::load($file)->get();
+	var_dump($rows); die('asdfads');
+        //loop through each line of the file and extract data into an ac function postUploadCsv()
+   
+
+	
             // check for duplicate entry, if duplicate then update the existing record
             
+
             // if not duplicate the insert into the approprate tables
-    }
+
+	}
 }
