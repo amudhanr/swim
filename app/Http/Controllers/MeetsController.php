@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Host;
-use App\Meet;
+use App\Hosts;
+use App\Meets;
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller

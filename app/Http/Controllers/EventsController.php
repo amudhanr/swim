@@ -12,14 +12,25 @@ class EventsController extends Controller
 
     public function index($meet_id) {
         $days = Meets::find($meet_id)->days;
-        $events = array();
-        $data = array();
+        $meet = Meets::find($meet_id)->first();
+        $events = $daysData = array();
         foreach ($days as $day) {
-            var_dump($day->id);
-            $data[$day->date][] = Days::find($day->id)->events;
+            $events[$day->date][] = Days::find($day->id)->events;
+            $daysData[$day->date] = $day;
         }
-        var_dump($data);
-	return view('meets.index', ['data' => $data]);
+	return view('meets.index', ['events' => $events, 'days' => $daysData, 'meet' => $meet]);
         //FIXME: need to edit the above foreach loop to group the events by day
     }
+
+    public function event($event_id) {
+        $days = Meets::find($event_id)->days;
+        $events = $daysData = array();
+        foreach ($days as $day) {
+            $events[$day->date][] = Days::find($day->id)->events;
+            $daysData[$day->date] = $day;
+        }
+	return view('events.event', ['events' => $events, 'days' => $daysData]);
+        //FIXME: need to edit the above foreach loop to group the events by day
+    }
+
 }

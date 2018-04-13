@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use App\Day;
+use App\Days;
 use Illuminate\Http\Request;
 class DaysController extends Controller
 {

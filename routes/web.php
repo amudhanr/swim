@@ -22,6 +22,7 @@ Route::get('/meets-info/', function () {
 });
 
 Route::get('/meets/m/{meet_id}', ['uses' => 'EventsController@index']);
+Route::get('/event/{event_id}', ['uses' => 'EventsController@event']);
 
 Route::get('/event/', function () {
 	return view('event');

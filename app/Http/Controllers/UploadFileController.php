@@ -1,4 +1,5 @@
 <?php
+use App\Exceptions\Handlers; 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -51,6 +52,7 @@ class UploadFileController extends Controller {
     public function processUploadedFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
+<<<<<<< HEAD
             throw new Exception("$file does not exist!");
 	    die ();
         	}
@@ -62,6 +64,21 @@ class UploadFileController extends Controller {
    
 
 	
+=======
+            throw new \Exception("$file does not exist!");
+        }
+        //check to see if the columns match what you are looking for
+        
+        //loop through each line of the file and extract data into an array
+        $handle = fopen($file, "r");
+	while(!feof($handle)) {
+            $data = fgetcsv($handle);
+            var_dump($data);
+        }	
+	// connect to your db, not included:
+        // or since you said name & id
+	 
+>>>>>>> 3660be5b5ad2ac0769ba6d1d9d8f09fdacc00ce8
             // check for duplicate entry, if duplicate then update the existing record
             
 

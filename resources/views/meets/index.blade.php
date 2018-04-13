@@ -2,44 +2,22 @@
 
 @section('content')
 <div class="container">
-
-@foreach ($data as $day=>$events)
-<p>{{ $day }}</p>
-    @foreach ($events as $event)
-    @php 
-        var_dump($event); 
-    @endphp
+    <h1 class ="text-center">{{ $meet->name }}</h1>
+    @foreach ($events as $day=>$eventData)
+    <div class="row">
+        <h4>DAY: {{ $day }}</h4>
+        <div class="col-xs-8 col-md-6" style="background-color:lavenderblush;">
+        @foreach ($eventData as $eventArray)
+            @foreach ($eventArray as $event)
+        <p>{{Html::linkAction('EventsController@event', $event->name, array($event->id))}}</p>
+            @endforeach
+        @endforeach    
+        </div>
+        <div class="col-xs-4 col-md-6" style="background-color:lavender;">
+        @php $dayInfo = $days[$day]; @endphp
+            <iframe width="340" height="340" src ="{{ $dayInfo->youtube_link }}" frameborder="0"></iframe>
+        </div>
+    </div>
     @endforeach
-@endforeach
-
-<h1 class ="text-center">MAIN EVENT</h1>
-	<div class="row">
-     <div class="col-sm-8" style="background-color:lavenderblush;">
-     <h4> DAY 1</h4>
-     <p> {{Html::link('/event1', 'Event #1 25m freestyle Age 10-11 (boys)')}}</p>
-     <p> {{Html::link('/event2', 'Event #2 25m freestyle Age 10-11 (girls)')}}</p>
-     <p>{{Html::link('/event3', 'Event #3 50m freestyle Age 12-13 (boys)')}} </p>
-     <p>Event #4 50m freestyle Age 12-13 (girls)</p>
-     <p>Event #5 50m freestyle Age 14-15 (boys)</p>
-     <p>Event #6 50m freestyle Age 14-15 (girls)</p>
-     </div>
-    <div class="col-sm-4" style="background-color:lavender;">
-           	<iframe width="340" height="340" src ="https://www.youtube.com/watch?v=lMM61mH0dJo" frameborder="0"></iframe>
-              </div>
-    </div>
-   	<div class="row">
-     <div class="col-sm-8" style="background-color:lavenderblush;">.
-     <h4> DAY 2</h4>
-     <p>Event #1 25m backstroke Age 10-11 (boys)</p>
-     <p>Event #2 25m backstroke Age 10-11 (girls)</p>
-     <p>Event #3 50m backstroke Age 12-13 (boys)</p>
-     <p>Event #4 50m backstroke Age 12-13 (girls)</p>
-     <p>Event #5 50m backstroke Age 14-15 (boys)</p>
-     <p>Event #6 50m backstroke Age 14-15 (girls)</p>
-     </div>
-    <div class="col-sm-4" style="background-color:lavender;">.
-        	<iframe width="340" height="340" src ="https://www.youtube.com/watch?v=lMM61mH0dJo" frameborder="0"></iframe>
-    </div>
-    </div>
 </div>
 @endsection
