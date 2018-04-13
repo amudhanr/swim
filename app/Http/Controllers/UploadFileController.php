@@ -52,33 +52,30 @@ class UploadFileController extends Controller {
     public function processUploadedFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
-<<<<<<< HEAD
             throw new Exception("$file does not exist!");
 	    die ();
         	}
 
         //check to see if the columns match what you are looking for
 	$rows = Excel::load($file)->get();
-	var_dump($rows); die('asdfads');
+        echo "<pre>";
+        $count = 0;
+	foreach ($rows as $row) {
+            $count++;
+            if (empty($row)) { continue; }
+            echo "Row $count" . PHP_EOL;
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                var_dump($col);
+            }
+            echo "<hr />";
+	}
+        echo "</pre>";
         //loop through each line of the file and extract data into an ac function postUploadCsv()
    
 
 	
-=======
-            throw new \Exception("$file does not exist!");
-        }
-        //check to see if the columns match what you are looking for
-        
-        //loop through each line of the file and extract data into an array
-        $handle = fopen($file, "r");
-	while(!feof($handle)) {
-            $data = fgetcsv($handle);
-            var_dump($data);
-        }	
-	// connect to your db, not included:
-        // or since you said name & id
-	 
->>>>>>> 3660be5b5ad2ac0769ba6d1d9d8f09fdacc00ce8
             // check for duplicate entry, if duplicate then update the existing record
             
 
