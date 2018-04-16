@@ -6,10 +6,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Exception;
 use Excel;
+use App\Meets;
 
 class UploadFileController extends Controller {
     public function index(){
-       return view('uploadfile');
+	$meets = Meets::pluck('name','id');
+        return view('uploadfile', ['meets' => $meets]);
     }
     public function showUploadFile(Request $request){
         $file = $request->file('image');
@@ -49,7 +51,7 @@ class UploadFileController extends Controller {
         }
     }
     
-    public function processUploadedFile($file) {
+    public function processMeetProgramFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
@@ -60,21 +62,27 @@ class UploadFileController extends Controller {
 	$rows = Excel::load($file)->get();
         echo "<pre>";
         $count = 0;
+        $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
 	foreach ($rows as $row) {
             $count++;
+            $data = array();
             if (empty($row)) { continue; }
             echo "Row $count" . PHP_EOL;
+            //assuming Row 2 is always meet name
+            if ($count == 2) {
+                //look up meet id
+                
+            }
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
-                var_dump($col);
+                $data[] = $col;
             }
             echo "<hr />";
 	}
         echo "</pre>";
         //loop through each line of the file and extract data into an ac function postUploadCsv()
    
-
 	
             // check for duplicate entry, if duplicate then update the existing record
             
