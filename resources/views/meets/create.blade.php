@@ -2,14 +2,10 @@
 
 @section('content')
 <div class="container">
-    <form method="post" action="/admin/meets/create">
+    <form method="post" action="/admin/meets/">
         <div class="form-group">
             <label for="name">Enter Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-            <label for="address">Enter Address</label>
-            <input type="text" name="address" id="address" placeholder="Enter address" class="form-control">
         </div>
         <div class="form-group">
             <label for="slug">Enter Unique Identifier for the Meet</label>

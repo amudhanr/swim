@@ -36,20 +36,19 @@ class HostsController extends Controller
      */
     public function store(Request $request)
     {
-       /**$rules = array(
+       $rules = array(
 		'name'		=> 'required',
-		'address'	=> 'required|email'
+		'address'	=> 'required|string|max:190'
 	);
 
-	$validator = Validator::make(Input::all(), $rule);
+	$validator = $request->validate($rules);
 
 	if ($validator->fails()) {
 		return Redirect::to('admin/hosts/create')
 			->withErrors($validator)
 			->withInput;
-	} else {
-	**/
-	$hosts = new Host;
+	} 
+	$hosts = new Hosts;
 	$hosts->name	= $request->name;
 	$hosts->address = $request->address;
 	$hosts->save();

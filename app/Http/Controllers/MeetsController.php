@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Host;
-use App\Meet;
+use App\Hosts;
+use App\Meets;
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller
@@ -25,7 +25,7 @@ class MeetsController extends Controller
      */
     public function create()
     {
-	$hosts = Host::pluck('name','id');
+	$hosts = Hosts::pluck('name','id');
         return view('meets.create', ['hosts' => $hosts]);//
     }
 
@@ -37,13 +37,25 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-        $meets = new Meet;
-        $meets->name     = $request->name;
-        $meets->address  = $request->address;
-        $meets->slug     = stripslashes(trim($request->slug));
-        $meets->start_date = $request->start_date;
-        $meets->end_date = $request->end_date;
-        $meets->hosts_id = $request->hosts_id;
+        $validator = $request->validate([
+            'name'           => 'required|max:190|string', 
+            'slug'           => 'required|max:50|string', 
+            'start_date'     => 'required|max:10|date', 
+            'end_date'       => 'required|max:10|date', 
+       ]); 
+        if ($validator->fails()) {
+            return "Form Error";
+            return Redirect::to('/admin/meets/create')
+          	  ->withErrors($validator)
+           	  ->withInput();
+        }
+        $validatedData = $request->validated();
+        $meets = new Meets;
+        $meets->name     = $validatedData->name;
+        $meets->slug     = stripslashes(trim($validatedData->slug));
+        $meets->start_date = $validatedData->start_date;
+        $meets->end_date = $validatedData->end_date;
+        $meets->hosts_id = $validatedData->hosts_id;
         $meets->save();
 
         return "DONE!";
