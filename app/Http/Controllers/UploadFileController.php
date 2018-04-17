@@ -1,12 +1,17 @@
 <?php
+use App\Exceptions\Handlers; 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Exception;
+use Excel;
+use App\Meets;
 
 class UploadFileController extends Controller {
     public function index(){
-       return view('uploadfile');
+	$meets = Meets::pluck('name','id');
+        return view('uploadfile', ['meets' => $meets]);
     }
     public function showUploadFile(Request $request){
         $file = $request->file('image');
@@ -33,28 +38,56 @@ class UploadFileController extends Controller {
         //Move Uploaded File
         $destinationPath = storage_path('app');
           
+	$newFilePath = $destinationPath . "/" . $file->getClientOriginalName();
         $file->move($destinationPath,$file->getClientOriginalName());
+	echo '<p>File Real Path, after Move: ' . $newFilePath . '</p>';
 
         try {
-            $this->processUploadedFile($file);
+            $this->processUploadedFile($newFilePath);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage(); 
+            die ($errorMessage);
            //FIXME: pass the above error message to the view and display it on the view 
         }
     }
     
-    public function processUploadedFile($file) {
+    public function processMeetProgramFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
-        }
+	    die ();
+        	}
+
         //check to see if the columns match what you are looking for
-        
-        //loop through each line of the file and extract data into an array
-        
+	$rows = Excel::load($file)->get();
+        echo "<pre>";
+        $count = 0;
+        $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+	foreach ($rows as $row) {
+            $count++;
+            $data = array();
+            if (empty($row)) { continue; }
+            echo "Row $count" . PHP_EOL;
+            //assuming Row 2 is always meet name
+            if ($count == 2) {
+                //look up meet id
+                
+            }
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+            echo "<hr />";
+	}
+        echo "</pre>";
+        //loop through each line of the file and extract data into an ac function postUploadCsv()
+   
+	
             // check for duplicate entry, if duplicate then update the existing record
             
+
             // if not duplicate the insert into the approprate tables
-    }
+
+	}
 }
-?>

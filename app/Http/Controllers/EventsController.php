@@ -3,22 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events;
-use App\Meets;
 use App\Days;
+use App\Events;
+use App\Heats;
+use App\Lanes;
+use App\Meets;
 
 class EventsController extends Controller
 {
 
     public function index($meet_id) {
         $days = Meets::find($meet_id)->days;
-        $events = array();
+        $meet = Meets::find($meet_id)->first();
+        $events = $daysData = array();
         foreach ($days as $day) {
-            var_dump($day->id);
-            $events[] = Days::find($day->id)->events;
+            $events[$day->date][] = Days::find($day->id)->events;
+            $daysData[$day->date] = $day;
         }
-        var_dump($events);
-	return view('meets.index', ['events' => $events, 'days' => $days]);
-        //FIXME: need to edit the above foreach loop to group the events by day
+	return view('meets.index', ['events' => $events, 'days' => $daysData, 'meet' => $meet]);
     }
+
+    public function event($event_id) {
+        $event = Events::find($event_id)->first();
+        $heats = Events::find($event_id)->heats;
+        $lanes = array();
+        foreach ($heats as $heat) {
+            $lanes_temp = Heats::find($heat->id)->lanes;
+            $lanes[$heat->name] = $lanes_temp;
+        }
+	return view('events.event', ['event' => $event, 'lanes' => $lanes]);
+    }
+
 }
