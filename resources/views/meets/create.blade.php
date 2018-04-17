@@ -2,7 +2,17 @@
 
 @section('content')
 <div class="container">
-    <form method="post" action="/admin/meets/">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+        </ul>
+    </div>
+@endif
+
+    {!! Form::open(array('url' => '/admin/meets/','class' => '')); !!} 
         <div class="form-group">
             <label for="name">Enter Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
@@ -24,10 +34,9 @@
 	    {!! Form::select('hosts', $hosts, null, array('class' => "form-control")) !!}
         </div>
       <div class="form-group">
-      <input type="submit" name="submit"> 
+          {!! Form::submit('Add Meet', array('class' => 'btn btn-primary')); !!}
       </div>
-      
-    </form>
+    {!! Form::close(); !!}
   </div>
 </div>
 @endsection
