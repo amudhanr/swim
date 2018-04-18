@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Hosts;
 use App\Meets;
+use Validator;
+use Redirect;
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller
@@ -37,19 +39,18 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'           => 'required|max:190|string', 
             'slug'           => 'required|max:50|string', 
             'start_date'     => 'required|max:10|date', 
             'end_date'       => 'required|max:10|date', 
        ]); 
         if ($validator->fails()) {
-            return "Form Error";
             return Redirect::to('/admin/meets/create')
           	  ->withErrors($validator)
            	  ->withInput();
         }
-        $validatedData = $request->validated();
+        $validatedData = $request->all(); //FIXME: This method doesn't exist
         $meets = new Meets;
         $meets->name     = $validatedData->name;
         $meets->slug     = stripslashes(trim($validatedData->slug));
