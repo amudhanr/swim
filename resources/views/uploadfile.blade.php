@@ -1,9 +1,72 @@
+@extends('layouts.app')
 
-     <?php
-         echo Form::open(array('url' => '/uploadfile','files'=>'true'));
-         echo 'Select the file to upload.';
-         echo Form::file('image');
-         echo Form::submit('Upload File');
-         echo Form::close();
-      ?>
-   
+@section('content')
+<div class="container">
+    <div class="panel panel-warning">
+        <div class="panel-heading"><h3 class="panel-title">Athletes Data Upload</h3></div>
+        <div class="panel-body">
+            {!! Form::open(array('url' => '/uploadfile','files'=>'true','class' => '')); !!} 
+            {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
+            <div class="form-group">
+                <label for="meets">Meet Name:</label>
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+            </div> 
+            <div class="input-group">
+              <div class="custom-file">
+                <label class="custom-file-label" for="file">Upload the Athletes file</label>
+                {!! Form::file('file', array('class' => 'form-control')); !!}
+              </div>
+            </div>
+            <div class="form-group">
+                <br />
+                {!! Form::submit('Upload &amp; Process File', array('class' => 'btn btn-primary')); !!}
+            </div>
+            {!! Form::close(); !!}
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading"><h3 class="panel-title">Meet Program Upload</h3></div>
+        <div class="panel-body">
+            {!! Form::open(array('url' => '/uploadfile','files'=>'true')); !!} 
+            {!! Form::text("filetype", "meet-program", array('hidden' => 'hidden')); !!} 
+            <div class="form-group">
+                <label for="meets">Meet Name:</label>
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+            </div> 
+            <div class="input-group">
+              <div class="custom-file">
+                <label class="custom-file-label" for="file">Upload the Meet Program file</label>
+                {!! Form::file('file', array('class' => 'form-control')); !!}
+              </div>
+            </div>
+            <div class="form-group">
+                <br />
+                {!! Form::submit('Upload &amp; Process File', array('class' => 'btn btn-primary')); !!}
+            </div>
+            {!! Form::close(); !!}
+        </div>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading"><h3 class="panel-title">Meet Results Upload</h3></div>
+        <div class="panel-body">
+            {!! Form::open(array('url' => '/uploadfile','files'=>'true')); !!} 
+            {!! Form::text("filetype", "meet-results", array('hidden' => 'hidden')); !!} 
+            <div class="form-group">
+                <label for="meets">Meet Name:</label>
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+            </div> 
+            <div class="input-group">
+              <div class="custom-file">
+                <label class="custom-file-label" for="file">Upload the Meet Results file</label>
+                {!! Form::file('file', array('class' => 'form-control')); !!}
+              </div>
+            </div>
+            <div class="form-group">
+                <br />
+                {!! Form::submit('Upload &amp; Process File', array('class' => 'btn btn-primary')); !!}
+            </div>
+            {!! Form::close(); !!}
+        </div>
+    </div>
+</div>
+@endsection

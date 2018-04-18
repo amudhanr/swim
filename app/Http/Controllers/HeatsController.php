@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Hosts;
 use Illuminate\Http\Request;
 
-class HostsController extends Controller
+class HeatsController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,6 @@ class HostsController extends Controller
     public function index()
     {
         //
-	return view('hosts.index');
     }
 
     /**
@@ -25,7 +24,8 @@ class HostsController extends Controller
      */
     public function create()
     {
-        return view('hosts.create');//
+	$hosts = Host::pluck('name','id');
+        return view('meets.create', ['hosts' => $hosts]);//
     }
 
     /**
@@ -36,25 +36,16 @@ class HostsController extends Controller
      */
     public function store(Request $request)
     {
-       $rules = array(
-		'name'		=> 'required',
-		'address'	=> 'required|string|max:190'
-	);
+        $heats = new heat;
+        $heats->name     = $request->name;
+        $heats-> 
 
-	$validator = $request->validate($rules);
 
-	if ($validator->fails()) {
-		return Redirect::to('admin/hosts/create')
-			->withErrors($validator)
-			->withInput;
-	} 
-	$hosts = new Hosts;
-	$hosts->name	= $request->name;
-	$hosts->address = $request->address;
-	$hosts->save();
 
-	return "DONE!";
-	
+        $heats->save();
+
+        return "DONE!";
+        //
     }
 
     /**
@@ -101,4 +92,5 @@ class HostsController extends Controller
     {
         //
     }
+
 }
