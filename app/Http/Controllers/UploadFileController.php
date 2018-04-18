@@ -76,19 +76,20 @@ class UploadFileController extends Controller {
             $count++;
             $data = array();
             if (empty($row)) { continue; }
-            echo "Row $count" . PHP_EOL;
-            //assuming Row 2 is always meet name
-            /*if ($count == 2) {
-                //look up meet id
-                
-             */
+            
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
-                var_dump($col);
             }
-            echo "<hr />";
+            if (!empty($data)) {
+                if (stripos($data[0], "event") !== false) {
+                    // This is an event heading row
+                }
+                var_dump($data);
+                echo "<hr />";
+                //first time you read the array with 7 element, it is your column header
+            }
 	}
         echo "</pre>";
         //loop through each line of the file and extract data into an ac function postUploadCsv()
