@@ -9,7 +9,7 @@
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")); !!}
             </div> 
             <div class="input-group">
               <div class="custom-file">
@@ -31,7 +31,7 @@
             {!! Form::text("filetype", "meet-program", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")); !!}
             </div> 
             <div class="input-group">
               <div class="custom-file">
@@ -53,7 +53,7 @@
             {!! Form::text("filetype", "meet-results", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control")) !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control")); !!}
             </div> 
             <div class="input-group">
               <div class="custom-file">

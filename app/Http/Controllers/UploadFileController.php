@@ -14,7 +14,7 @@ class UploadFileController extends Controller {
         return view('uploadfile', ['meets' => $meets]);
     }
     public function showUploadFile(Request $request){
-        $file = $request->file('image');
+        $file = $request->file('file');
         
         //Display File Name
         echo 'File Name: '.$file->getClientOriginalName();
@@ -43,7 +43,15 @@ class UploadFileController extends Controller {
 	echo '<p>File Real Path, after Move: ' . $newFilePath . '</p>';
 
         try {
-            $this->processUploadedFile($newFilePath);
+            switch($request->filetype) {
+                case 'athletes':
+                break;
+                case 'meet-program':
+                    $this->processUploadedFile($newFilePath);
+                break;
+                case 'meet-result':
+                break;
+            }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage(); 
             die ($errorMessage);
