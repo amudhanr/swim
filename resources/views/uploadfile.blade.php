@@ -4,9 +4,21 @@
 <script>
 function showDay(str) {
     if (str == "") {
-        document.getElementById("txtHint").innerHTML = "";
+        document.getElementById("day").innerHTML = "";
         return;
-    } else {
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("day").innerHTML = this.responseText;
+            }
+        };
         xmlhttp.open("GET","getday.php?q="+str,true);
         xmlhttp.send();
     }
@@ -22,7 +34,7 @@ function showDay(str) {
                 <label for="meets">Meet Name:</label>
                 {!! Form::select('meets', $meets, null, array('class' => "form-control", 'onchange'=> 'showDay(this.value)')); !!}
             </div> 
-            
+            <div id="day"><b>No meet is selected...</b></div>
             
             <div class="input-group">
               <div class="custom-file">
