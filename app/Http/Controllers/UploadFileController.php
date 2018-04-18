@@ -48,7 +48,7 @@ class UploadFileController extends Controller {
                     $this->processAthleteFile($newFilePath); 
                 break;
                 case 'meet-program':
-                    $this->processUploadedFile($newFilePath);
+                    $this->processMeetProgramFile($newFilePath);
                 break;
                 case 'meet-result':
                 break;
@@ -58,8 +58,8 @@ class UploadFileController extends Controller {
             die ($errorMessage);
            //FIXME: pass the above error message to the view and display it on the view 
         }
+        die();
     }
-    
     public function processMeetProgramFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
@@ -69,6 +69,7 @@ class UploadFileController extends Controller {
 
         //check to see if the columns match what you are looking for
 	$rows = Excel::load($file)->get();
+        
         echo "<pre>";
         $count = 0;
         $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
@@ -78,14 +79,15 @@ class UploadFileController extends Controller {
             if (empty($row)) { continue; }
             echo "Row $count" . PHP_EOL;
             //assuming Row 2 is always meet name
-            if ($count == 2) {
+            /*if ($count == 2) {
                 //look up meet id
                 
-            }
+             */
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
+                var_dump($col);
             }
             echo "<hr />";
 	}
@@ -96,6 +98,7 @@ class UploadFileController extends Controller {
             // check for duplicate entry, if duplicate then update the existing record
             
 
+        // q
             // if not duplicate the insert into the approprate tables
 
     } 
@@ -127,6 +130,6 @@ class UploadFileController extends Controller {
             echo "<hr />";
 	}
         echo "</pre>";
-
     }
+
 }
