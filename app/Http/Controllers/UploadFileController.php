@@ -45,6 +45,7 @@ class UploadFileController extends Controller {
         try {
             switch($request->filetype) {
                 case 'athletes':
+                    $this->processAthleteFile($newFilePath); 
                 break;
                 case 'meet-program':
                     $this->processUploadedFile($newFilePath);
@@ -97,5 +98,35 @@ class UploadFileController extends Controller {
 
             // if not duplicate the insert into the approprate tables
 
+    } 
+    public function processAthleteFile($file) {
+        if (!file_exists($file)) {
+        throw new Exception("$file does not exist!");
+        die();
+        }
+
+        $rows = Excel::load($file)->get();
+        echo "<pre>";
+        $count = 0;
+        $swimmer_id = $name_id = $sex_id = $age_id = $birth_id = null;
+	foreach ($rows as $row) {
+            $count++;
+            $data = array();
+            if (empty($row)) { continue; }
+            echo "Row $count" . PHP_EOL;
+            //assuming Row 2 is always meet name
+            if ($count == 2) {
+                //look up meet id
+                
+            }
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+            echo "<hr />";
 	}
+        echo "</pre>";
+
+    }
 }
