@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<script>
+function showDay(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        xmlhttp.open("GET","getday.php?q="+str,true);
+        xmlhttp.send();
+    }
+}
+</script>
 <div class="container">
     <div class="panel panel-warning">
         <div class="panel-heading"><h3 class="panel-title">Athletes Data Upload</h3></div>
@@ -9,8 +20,10 @@
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control")); !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control", 'onchange'=> 'showDay(this.value)')); !!}
             </div> 
+            
+            
             <div class="input-group">
               <div class="custom-file">
                 <label class="custom-file-label" for="file">Upload the Athletes file</label>
