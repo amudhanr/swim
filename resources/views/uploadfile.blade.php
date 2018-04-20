@@ -32,7 +32,7 @@ function showDay(str) {
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets[0], null, array('class' => "form-control", 'onchange'=> 'showDay(this.value)')); !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control", 'onchange'=> 'showDay(this.value)')); !!}
             </div> 
             <div id="day"><b>No meet is selected...</b></div>
             
