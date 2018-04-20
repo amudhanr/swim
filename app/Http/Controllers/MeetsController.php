@@ -50,13 +50,13 @@ class MeetsController extends Controller
           	  ->withErrors($validator)
            	  ->withInput();
         }
-        $validatedData = $request->all(); //FIXME: This method doesn't exist
+        $validatedData = $request->all();
         $meets = new Meets;
-        $meets->name     = $validatedData->name;
-        $meets->slug     = stripslashes(trim($validatedData->slug));
-        $meets->start_date = $validatedData->start_date;
-        $meets->end_date = $validatedData->end_date;
-        $meets->hosts_id = $validatedData->hosts_id;
+        $meets->name     = $validatedData['name'];
+        $meets->slug     = stripslashes(trim($validatedData['slug']));
+        $meets->start_date = date("Y-m-d H:i:s", strtotime($validatedData['start_date']));
+        $meets->end_date = date("Y-m-d H:i:s", strtotime($validatedData['end_date']));
+        $meets->hosts_id = $validatedData['hosts'];
         $meets->save();
 
         return "DONE!";
