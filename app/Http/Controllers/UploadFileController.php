@@ -14,7 +14,7 @@ class UploadFileController extends Controller {
         return view('uploadfile', ['meets' => $meets]);
     }
     public function showUploadFile(Request $request){
-        $file = $request->file('image');
+        $file = $request->file('file');
         
         //Display File Name
         echo 'File Name: '.$file->getClientOriginalName();
@@ -43,14 +43,23 @@ class UploadFileController extends Controller {
 	echo '<p>File Real Path, after Move: ' . $newFilePath . '</p>';
 
         try {
-            $this->processUploadedFile($newFilePath);
+            switch($request->filetype) {
+                case 'athletes':
+                    $this->processAthleteFile($newFilePath); 
+                break;
+                case 'meet-program':
+                    $this->processMeetProgramFile($newFilePath);
+                break;
+                case 'meet-result':
+                break;
+            }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage(); 
             die ($errorMessage);
            //FIXME: pass the above error message to the view and display it on the view 
         }
+        die();
     }
-    
     public function processMeetProgramFile($file) {
         //check if the file exists
         if (!file_exists($file)) {
@@ -60,9 +69,50 @@ class UploadFileController extends Controller {
 
         //check to see if the columns match what you are looking for
 	$rows = Excel::load($file)->get();
+        
         echo "<pre>";
         $count = 0;
         $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+	foreach ($rows as $row) {
+            $count++;
+            $data = array();
+            if (empty($row)) { continue; }
+            
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+            if (!empty($data)) {
+                if (stripos($data[0], "event") !== false) {
+                    // This is an event heading row
+                }
+                var_dump($data);
+                echo "<hr />";
+                //first time you read the array with 7 element, it is your column header
+            }
+	}
+        echo "</pre>";
+        //loop through each line of the file and extract data into an ac function postUploadCsv()
+   
+	
+            // check for duplicate entry, if duplicate then update the existing record
+            
+
+        // q
+            // if not duplicate the insert into the approprate tables
+
+    } 
+    public function processAthleteFile($file) {
+        if (!file_exists($file)) {
+        throw new Exception("$file does not exist!");
+        die();
+        }
+
+        $rows = Excel::load($file)->get();
+        echo "<pre>";
+        $count = 0;
+        $swimmer_id = $name_id = $sex_id = $age_id = $birth_id = null;
 	foreach ($rows as $row) {
             $count++;
             $data = array();
@@ -81,13 +131,6 @@ class UploadFileController extends Controller {
             echo "<hr />";
 	}
         echo "</pre>";
-        //loop through each line of the file and extract data into an ac function postUploadCsv()
-   
-	
-            // check for duplicate entry, if duplicate then update the existing record
-            
+    }
 
-            // if not duplicate the insert into the approprate tables
-
-	}
 }
