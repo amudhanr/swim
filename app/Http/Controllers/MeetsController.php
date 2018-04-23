@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Hosts;
 use App\Meets;
+use Validator;
+use Redirect;
 use Illuminate\Http\Request;
 
 class MeetsController extends Controller
@@ -37,25 +39,24 @@ class MeetsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'           => 'required|max:190|string', 
             'slug'           => 'required|max:50|string', 
             'start_date'     => 'required|max:10|date', 
             'end_date'       => 'required|max:10|date', 
        ]); 
         if ($validator->fails()) {
-            return "Form Error";
             return Redirect::to('/admin/meets/create')
           	  ->withErrors($validator)
            	  ->withInput();
         }
-        $validatedData = $request->validated();
+        $validatedData = $request->all();
         $meets = new Meets;
-        $meets->name     = $validatedData->name;
-        $meets->slug     = stripslashes(trim($validatedData->slug));
-        $meets->start_date = $validatedData->start_date;
-        $meets->end_date = $validatedData->end_date;
-        $meets->hosts_id = $validatedData->hosts_id;
+        $meets->name     = $validatedData['name'];
+        $meets->slug     = stripslashes(trim($validatedData['slug']));
+        $meets->start_date = date("Y-m-d H:i:s", strtotime($validatedData['start_date']));
+        $meets->end_date = date("Y-m-d H:i:s", strtotime($validatedData['end_date']));
+        $meets->hosts_id = $validatedData['hosts'];
         $meets->save();
 
         return "DONE!";
