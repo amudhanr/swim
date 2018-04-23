@@ -5,7 +5,7 @@
     <div class="row">
     	<h1 class="text-center"> BAIS Swim! </h1>
         <p class="text-center"> Most Recent Activity:</p>
-        <p class="text-center">{{ Html::link('/meets-info', 'IISSAC Day I', true)}}</p> <p class="text-center"> Date: March 1, 2017 </p>
+        <p class="text-center">{{ Html::link('/meets/1', 'IISSAC Day I', true)}}</p> <p class="text-center"> Date: March 1, 2017 </p>
     </div>
     
     <div class="row">
