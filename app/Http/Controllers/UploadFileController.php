@@ -8,6 +8,7 @@ use Exception;
 use Excel;
 use App\Meets;
 use App\Swimmers;
+use App\Teams;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -129,10 +130,11 @@ class UploadFileController extends Controller {
                 if ($team) {
                     $team_name = $data[0];
                     // look up team id
-                    $teamData = Team::where("name",$team_name)->first();
+                    $teamData = Teams::where("name",$team_name)->first();
                     if (empty($teamData)) {
                         throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
                     $team_id = $teamData->id;
+                    }
                 }
                 
                 //check to see if this is Team Roster
@@ -141,8 +143,7 @@ class UploadFileController extends Controller {
                 } else { 
                     $team = false; 
                 }
-            }
-            elseif (sizeof($data) == 5) {
+            } elseif (sizeof($data) == 5) {
                 //process the swimmer data
                 //Check if the swimmer already exists, if so, then update; else insert
                 $name = explode(",",$data[1]);
@@ -161,6 +162,7 @@ class UploadFileController extends Controller {
                     $swimmer->slug          = strtolower(trim($first_name) . "-" . trim($last_name));
                     $swimmer->team_id       = $team_id;
                 var_dump($swimmer);
+                }
                 
             }
             echo "<hr />";
