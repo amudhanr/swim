@@ -2,20 +2,19 @@
 
 @section('content')
 <div class="container">
-  <form method="post" action="/admin/hosts">
- {{ csrf_field() }}
- <div class="form-group">
-	<label for="name">Enter Name</label>	
-    <input type="text" name="name" id="name" placeholder="Enter name" class="form-control">
- </div>
- <div class="form-group">
-	<label for="slug">Enter Unique Identifier for the Meet</label>
-    <input type="text" name="address" id="address" placeholder="Enter address" class="form-control">
- </div>
- <div class="form-group">
-    <input type="submit" name="submit">
- </div>
-  </form>
+    {!! Form::open(array('url' => '/admin/hosts','class' => '')); !!} 
+     <div class="form-group">
+        <label for="name">Enter Name</label>	
+        <input type="text" name="name" id="name" placeholder="Enter name" class="form-control">
+     </div>
+     <div class="form-group">
+        <label for="address">Address</label>
+        {!! Form::text("address", null, array('placeholder' => 'Enter the complete Host address', 'class' => 'form-control')); !!} 
+     </div>
+     <div class="form-group">
+        {!! Form::submit('Add Host', array('class' => 'btn btn-primary')); !!}
+     </div>
+    {!! Form::close(); !!}
 </div>
 
 @endsection
