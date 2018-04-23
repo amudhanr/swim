@@ -105,6 +105,10 @@ class UploadFileController extends Controller {
             // if not duplicate the insert into the approprate tables
 
     } 
+    public function ajax(request $request){
+    	echo $request;
+    
+    }
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
