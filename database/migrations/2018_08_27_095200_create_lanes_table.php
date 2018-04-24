@@ -18,10 +18,10 @@ class CreateLanesTable extends Migration
             $table->tinyInteger('lane_number')->unsigned();
             $table->integer('swimmers_id')->unsigned();
             $table->foreign('swimmers_id')->references('id')->on('swimmers');
-            $table->integer('seed_time')->unsigned();
-            $table->integer('time')->unsigned();
+            $table->integer('seed_time')->unsigned()->nullable();
+            $table->integer('time')->unsigned()->nullable();
             $table->tinyInteger('position')->unsigned();
-            $table->tinyInteger('points')->unsigned();
+            $table->tinyInteger('points')->unsigned()->default(0);
             $table->timestamps();
         });
     }
