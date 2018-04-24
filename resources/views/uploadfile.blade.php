@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <script type="text/javascript">
 $(".meets").change(function(){
@@ -7,7 +6,7 @@ $(".meets").change(function(){
         $("select option:selected").each (function() {
             str += $(this).text() + " ";
         });
-        $("dic").text(str);
+        $( "div" ).text( str );
     ])
 });
 </script>
