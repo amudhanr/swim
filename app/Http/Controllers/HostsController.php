@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Hosts;
 use Illuminate\Http\Request;
+use Validator;
+use Redirect;
 
 class HostsController extends Controller
 {
@@ -15,7 +17,7 @@ class HostsController extends Controller
     public function index()
     {
         //
-	return view('hosts.index');
+        return view('hosts.index');
     }
 
     /**
@@ -36,25 +38,24 @@ class HostsController extends Controller
      */
     public function store(Request $request)
     {
-       $rules = array(
-		'name'		=> 'required',
-		'address'	=> 'required|string|max:190'
-	);
+       $validator = Validator::make($request->all(), [
+           'name'          => 'required',
+           'address'       => 'required|string|max:190'
+       ]); 
+        if ($validator->fails()) {
+            return Redirect::to('/admin/hosts/create')
+          	  ->withErrors($validator)
+           	  ->withInput();
+        }
 
-	$validator = $request->validate($rules);
+        $validatedData = $request->all();
+        $hosts = new Hosts;
+        $hosts->name    = $validatedData['name'];
+        $hosts->address = $validatedData['address'];
+        $hosts->save();
 
-	if ($validator->fails()) {
-		return Redirect::to('admin/hosts/create')
-			->withErrors($validator)
-			->withInput;
-	} 
-	$hosts = new Hosts;
-	$hosts->name	= $request->name;
-	$hosts->address = $request->address;
-	$hosts->save();
-
-	return "DONE!";
-	
+        return "DONE!";
+        
     }
 
     /**
