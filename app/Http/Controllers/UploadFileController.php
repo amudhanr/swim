@@ -123,7 +123,7 @@ class UploadFileController extends Controller {
 	foreach ($rows as $row) {
             $count++;
             $data = array();
-            if (empty($row)) { continue; }
+            if (empty($row) || $count < 5) { continue; }
             echo "Row $count" . PHP_EOL;
 
             foreach ($row as $col) {

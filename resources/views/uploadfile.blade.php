@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<script>
+<script type="text/javascript">
 $(".meets").change(function(){
     var str ="";
         $("select option:selected").each (function() {
@@ -9,10 +9,7 @@ $(".meets").change(function(){
         });
         $("dic").text(str);
     ])
-    .change();
-
-
-
+});
 </script>
 <div class="container">
     <div class="panel panel-warning">
