@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Excel;
 use App\Meets;
+use App\Swimmers;
+use App\Teams;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -103,16 +105,20 @@ class UploadFileController extends Controller {
             // if not duplicate the insert into the approprate tables
 
     } 
+    public function ajax(request $request){
+    	echo $request;
+    
+    }
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
-        throw new Exception("$file does not exist!");
-        die();
+            throw new Exception("$file does not exist!");
         }
 
         $rows = Excel::load($file)->get();
         echo "<pre>";
         $count = 0;
-        $swimmer_id = $name_id = $sex_id = $age_id = $birth_id = null;
+        $team = false;
+        $swimmer_id = $team_name = $name = $sex_id = $age_id = $birth_id = null;
 	foreach ($rows as $row) {
             $count++;
             $data = array();
@@ -124,22 +130,44 @@ class UploadFileController extends Controller {
                 if (empty($col)) { continue; }
                 $data[] = $col;
             }
-                 
-            
-            if (count($data) == 1) {
-                //this is a team name
-            
-                //search the team in the database
-                if (/*team not found) {
-                    //make new team
+            if (sizeof($data) == 1) {
+                if ($team) {
+                    $team_name = $data[0];
+                    // look up team id
+                    $teamData = Teams::where("name",$team_name)->first();
+                    if (empty($teamData)) {
+                        throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
+                    $team_id = $teamData->id;
+                    }
                 }
-                $teams_id = $data[1]
-            }
-
-            if ($data[0] == 0){}
-
-                 */
-
+                
+                //check to see if this is Team Roster
+                if ((stripos($data[0],'team roster') !== false) || (stripos($data[0],'total athletes') !== false) ) { 
+                    $team = true; 
+                } else { 
+                    $team = false; 
+                }
+            } elseif (sizeof($data) == 5) {
+                //process the swimmer data
+                //Check if the swimmer already exists, if so, then update; else insert
+                $name = explode(",",$data[1]);
+                $first_name = $name[1];
+                $last_name  = $name[0];
+                $gender     = $data[2];
+                $dob        = $data[4];
+                $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
+                if (empty($swimmer)) { 
+                    echo "Swimmer doesn't exist, let's insert" . PHP_EOL;
+                    $swimmer = new Swimmers;
+                    $swimmer->first_name    = $first_name;
+                    $swimmer->last_name     = $last_name;
+                    $swimmer->gender        = $gender;
+                    $swimmer->date_of_birth = date("Y-m-d", strtotime($dob));
+                    $swimmer->slug          = strtolower(trim($first_name) . "-" . trim($last_name));
+                    $swimmer->team_id       = $team_id;
+                var_dump($swimmer);
+                }
+                
             }
             echo "<hr />";
 	}
