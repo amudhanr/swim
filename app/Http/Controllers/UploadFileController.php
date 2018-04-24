@@ -116,17 +116,30 @@ class UploadFileController extends Controller {
 	foreach ($rows as $row) {
             $count++;
             $data = array();
-            if (empty($row)) { continue; }
+            if (empty($row) || $count < 5) { continue; }
             echo "Row $count" . PHP_EOL;
-            //assuming Row 2 is always meet name
-            if ($count == 2) {
-                //look up meet id
-                
-            }
+
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
+            }
+                 
+            
+            if (count($data) == 1) {
+                //this is a team name
+            
+                //search the team in the database
+                if (/*team not found) {
+                    //make new team
+                }
+                $teams_id = $data[1]
+            }
+
+            if ($data[0] == 0){}
+
+                 */
+
             }
             echo "<hr />";
 	}
