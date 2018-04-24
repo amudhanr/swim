@@ -2,20 +2,14 @@
 
 @section('content')
 <script>
-    $(".btn-submit").click(function(e){
-        e.preventDefault();
-        var name = $("input[name=name]").val();
-        var password = $("input[name=password]").val();
-        var email = $("input[name=email]").val();
-
-        $.ajax({
-           type:'POST',
-           url:'/ajaxRequest',
-           data:{name:name, password:password, email:email},
-           success:function(data){
-              alert(data.success);
-           }
-        });
+    $(".meets").change(function(){
+    var str = "";
+    $( "select option:selected" ).each(function() {
+      str += $( this ).text() + " ";
+    });
+    $( "div" ).text( str );
+  })
+  .change();
 </script>
 <div class="container">
     <div class="panel panel-warning">
@@ -25,7 +19,7 @@
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control", )); !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control meets", 'selected =>"selected")); !!}
             </div> 
             <div id="day"><b>No meet is selected...</b></div>
             

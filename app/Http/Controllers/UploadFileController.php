@@ -122,7 +122,7 @@ class UploadFileController extends Controller {
 	foreach ($rows as $row) {
             $count++;
             $data = array();
-            if (empty($row)) { continue; }
+            if (empty($row) || $count < 5) { continue; }
             echo "Row $count" . PHP_EOL;
 
             foreach ($row as $col) {
@@ -136,7 +136,18 @@ class UploadFileController extends Controller {
                     // look up team id
                     $teamData = Teams::where("name",$team_name)->first();
                     if (empty($teamData)) {
-                        throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
+                        
+                        $team = new Teams;
+                        $team->name = $team_name;
+                        $team->short_name = null;
+                        $team->address = null;
+                        $team->contact_person = null;
+                        $team->contact_email = null;
+                        $team->contact_phone = null;
+                        $team->slug = null;
+                        $team->save();
+                        echo "Team " . $team_name . " is created." . PHP_EOL;
+                        //throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
                     $team_id = $teamData->id;
                     }
                 }
