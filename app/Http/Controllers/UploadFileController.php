@@ -119,7 +119,7 @@ class UploadFileController extends Controller {
         echo "<pre>";
         $count = 0;
         $team = false;
-        $swimmer_id = $team_name = $name = $sex_id = $age_id = $birth_id = null;
+        $swimmer_id = $team_name = $name = $team_id = $gender = $age = $dob = null;
 	foreach ($rows as $row) {
             $count++;
             $data = array();
@@ -148,8 +148,7 @@ class UploadFileController extends Controller {
                         $team->slug = null;
                         $team->save();
                         echo "Team " . $team_name . " is created." . PHP_EOL;
-                        //throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
-                    $team_id = $teamData->id;
+                        $team_id = $team->id;
                     }
                 }
                 
@@ -177,7 +176,8 @@ class UploadFileController extends Controller {
                     $swimmer->date_of_birth = date("Y-m-d", strtotime($dob));
                     $swimmer->slug          = strtolower(trim($first_name) . "-" . trim($last_name));
                     $swimmer->team_id       = $team_id;
-                var_dump($swimmer);
+                    $swimmer->save();
+                    var_dump($swimmer);
                 }
                 
             }
