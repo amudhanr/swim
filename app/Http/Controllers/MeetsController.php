@@ -18,6 +18,7 @@ class MeetsController extends Controller
     public function index()
     {
         //
+        return view('hosts.index'); 
     }
 
     /**

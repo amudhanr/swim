@@ -4,7 +4,9 @@
 <div class="container">
   <div class="row">
     <form method="post" action="/admin/days/create">
-   
+
+
+  {!! Form::open(array('url' => '/admin/meets/','ckass' => '')); !!} 
     <div class="form-group">
 	<label for="id"> Enter ID</label>
 	<input type="text" name="id" id="id" placeholder="Enter ID" class="form-control">
@@ -29,9 +31,10 @@
      	<input type="text" name="date" id="date" placeholder="Enter date" class="form-control">
       </div>
     <div class="form-group"> 
-        <input type="submit" name="submit"> 
+        {!! Form::submit('Add Day', array('placeholder' => 'btn btn-primary')); !!} 
 
     </form>
+        {!! Form::close(); !!} 
   </div>
 </div>   
 @endsection
