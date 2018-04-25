@@ -130,6 +130,7 @@ class UploadFileController extends Controller {
                 if (empty($col)) { continue; }
                 $data[] = $col;
             }
+
             if (sizeof($data) == 1) {
                 if ($team) {
                     $team_name = $data[0];
@@ -147,8 +148,9 @@ class UploadFileController extends Controller {
                         $team->slug = null;
                         $team->save();
                         echo "Team " . $team_name . " is created." . PHP_EOL;
-                        //throw new Exception("Please add the Team information first for the team $team_name before attempting to insert the athletes information for this team");
-                    $team_id = $teamData->id;
+                        $team_id = $team->id;
+                    } else {
+                        $team_id = $teamData->id;
                     }
                 }
                 
