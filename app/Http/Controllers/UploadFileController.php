@@ -118,7 +118,7 @@ class UploadFileController extends Controller {
         $rows = Excel::load($file)->get();
         echo "<pre>";
         $count = 0;
-        $team = false;
+        $team = true;
         $swimmer_id = $team_name = $name = $sex_id = $age_id = $birth_id = null;
 	foreach ($rows as $row) {
             $count++;
@@ -170,16 +170,17 @@ class UploadFileController extends Controller {
                 $gender     = $data[2];
                 $dob        = $data[4];
                 $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
-                if (empty($swimmer)) { 
-                    echo "Swimmer doesn't exist, let's insert" . PHP_EOL;
+                if (sizeof($swimmer) == 0) { 
+                    echo "Swimmer doesn't exist, let's insert ... " . PHP_EOL;
                     $swimmer = new Swimmers;
                     $swimmer->first_name    = $first_name;
                     $swimmer->last_name     = $last_name;
                     $swimmer->gender        = $gender;
                     $swimmer->date_of_birth = date("Y-m-d", strtotime($dob));
-                    $swimmer->slug          = strtolower(trim($first_name) . "-" . trim($last_name));
+                    $swimmer->slug          = strtolower(str_replace(' ', '', $first_name) . "-" . str_replace(' ', '', $last_name));
                     $swimmer->team_id       = $team_id;
-                var_dump($swimmer);
+                    $swimmer->save();
+                    echo "...succesfully imported swimmer " . $swimmer->first_name . PHP_EOL;
                 }
                 
             }
