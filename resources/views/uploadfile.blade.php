@@ -2,12 +2,16 @@
 @section('content')
 <script type="text/javascript">
 $(".meets").change(function(){
-    var str ="";
-        $("select option:selected").each (function() {
-            str += $(this).text() + " ";
-        });
-        $( "div" ).text( str );
-    ])
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      return this;
+    }
+  };
+  xmlhttp.open("GET", "cd_catalog.xml", true);
+  xmlhttp.send();
+}
+
 });
 </script>
 <div class="container">
