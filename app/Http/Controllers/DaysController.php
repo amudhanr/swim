@@ -25,14 +25,26 @@ class DaysController extends Controller
     }
 
     public function store(Request $request)
-	{
+     {
+         $validator = Validator::make($request->all(), [
+             'name'     => 'required', 
+             'address'  => 'required|string|max:190'
+         ]);  
+            if ($validator->fails())  {
+                return Redirect::to('/admin/days/create')
+                    ->withErrors($validator)
+                    ->withInput();
+
+            }
+
+        $validatedData = $request->all(); 
 	$days = new Day;
-  	$days->meets_id = $request->meets_id;
-	$days->youtube_link	= $request->youtube_link;
-	$days->date = $request->date;
-	$days->slug = $request->slug;
+  	$days->meets_id = $validatedData['meets_id'];
+	$days->youtube_link	= $validatedData['youtube_link']; 
+	$days->date = $validatedData['date']; 
+	$days->slug = $validatedData['slug']; 
 	  
-	$teams->save();
+	$days->save;
 	return "DONE!";
 	
     }
