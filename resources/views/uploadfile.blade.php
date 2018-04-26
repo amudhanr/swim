@@ -2,15 +2,10 @@
 @section('content')
 <script type="text/javascript">
 $(".meets").change(function(){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+  
       alert("sdafasdfsa");
     }
-  };
-}
 
-});
 </script>
 <div class="container">
     <div class="panel panel-warning">
