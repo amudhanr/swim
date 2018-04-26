@@ -77,8 +77,15 @@ class UploadFileController extends Controller {
         $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
 	foreach ($rows as $row) {
             $count++;
+
             $data = array();
             if (empty($row)) { continue; }
+            
+            echo "line " . $count . "</br>";
+            
+            if ($count == 3) {
+                echo "this is days </br>";
+            }           
             
             foreach ($row as $col) {
                 //skip empty columns
@@ -88,6 +95,10 @@ class UploadFileController extends Controller {
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
+                    echo "this is an event </br>";
+                }
+                elseif(sizeof($data) == 7 && stripos($data[5], "_") !== false) {
+                    echo "this is a lane data </br>";
                 }
                 var_dump($data);
                 echo "<hr />";
