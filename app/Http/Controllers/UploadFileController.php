@@ -51,7 +51,7 @@ class UploadFileController extends Controller {
                     $this->processAthleteFile($newFilePath); 
                 break;
                 case 'meet-program':
-                    $this->processMeetProgramFile($newFilePath);
+                    $this->processMeetProgramFile($newFilePath, $request->meets);
                 break;
                 case 'meet-results':
                     echo "tis";
@@ -65,33 +65,75 @@ class UploadFileController extends Controller {
         }
         die();
     }
-    public function processMeetProgramFile($file) {
+    public function processMeetProgramFile($file, $meet_id) {
         echo "kwdkwdknda";
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
 	    die ();
-        	}
+        }
 
         //check to see if the columns match what you are looking for
 	$rows = Excel::load($file)->get();
-        
         echo "<pre>";
         $count = 0;
-        $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+        $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
 	foreach ($rows as $row) {
             $count++;
+
             $data = array();
             if (empty($row)) { continue; }
+            
+            echo "line " . $count . "</br>";
+            
             
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
             }
+
+            if ($count == 3) {
+                $nameData = (explode(" ", $data[0]));
+                $name = $nameData[3] . " " . $nameData[4];
+                echo "this is days " . $name . "</br>";
+                if (sizeof($day) == 0) {
+                    $day = new Days;
+                    $day->name = $name;
+                    $day->meets_id = $meet_id;
+                    $day->date = null;
+                    $day->slug = null;
+                    $day->youtube_link = null;
+                    $day->save();
+                    echo "Days " . $name . " is created</br>";
+                    $days_id = $day->id;
+                    echo "Days id is " . $days_id;
+                } 
+                $day = Days::where('name', $name)->where('meets_id', $meet_id)->get();
+                    $days_id = $day->id;
+                    echo "Days id is " . $days_id;
+            } 
+
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
+
+                        if (stripos($data[0], "Relay") !== false) {
+                            echo "this is a relay event </br>";
+                            $relay = true;
+                        }
+                        
+                        else {
+                            echo "this is an non -relay event </br>";
+                            $relay = false;
+                        }
+
+                }
+                elseif(sizeof($data) == 7 && stripos($data[5], "_") !== false) {
+                    echo "this is a lane data </br>";
+                }
+                
+                var_dump($data);                
                     $event = $data[0];
                     echo "Event Name: $event" . PHP_EOL;
 
@@ -99,7 +141,7 @@ class UploadFileController extends Controller {
                 echo "<hr />";
                 //first time you read the array with 7 element, it is your column header
             }
-	}
+	
         echo "</pre>";
         //loop through each line of the file and extract data into an ac function postUploadCsv()
    
@@ -145,6 +187,12 @@ class UploadFileController extends Controller {
                 if (empty($col)) { continue; } 
                 $data[] = $col;
             }
+            var_dump ($data);
+        }
+    
+    
+    
+    }
 
             if (($count > 2) && ($count == 3)) {
                 echo "this is a days data</br>";
@@ -178,7 +226,7 @@ class UploadFileController extends Controller {
         echo "<pre>";
         $count = 0;
         $team = true;
-        $swimmer_id = $team_name = $name = $sex_id = $age_id = $birth_id = null;
+        $swimmer_id = $first_name = $last_name = $team_name = $name = $sex_id = $age_id = $birth_id = null;
 	foreach ($rows as $row) {
             $count++;
             $data = array();
@@ -220,7 +268,7 @@ class UploadFileController extends Controller {
                 } else { 
                     $team = false; 
                 }
-            } elseif (sizeof($data) == 5) {
+            } elseif ((sizeof($data) == 5) && (stripos($data[1], 'name') == false)) {
                 //process the swimmer data
                 //Check if the swimmer already exists, if so, then update; else insert
                 $name = explode(",",$data[1]);
@@ -231,11 +279,13 @@ class UploadFileController extends Controller {
                     'dob'           => $data[4],
                     'team_id'       => $team_id
                 );
+                $first_name = $swimmer_data['first_name'];
+                $last_name = $swimmer_data['last_name'];
                 $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
                 if (sizeof($swimmer) == 0) { 
                     echo "Swimmer doesn't exist, let's insert ... " . PHP_EOL;
                     $this->_addSwimmer($data);
-                    echo "...succesfully imported swimmer " . $swimmer->first_name . PHP_EOL;
+                    echo "...succesfully imported swimmer " . $swimmer_data->first_name . PHP_EOL;
                 }
                 
             }
