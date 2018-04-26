@@ -52,7 +52,9 @@ class UploadFileController extends Controller {
                 case 'meet-program':
                     $this->processMeetProgramFile($newFilePath, $request->meets);
                 break;
-                case 'meet-result':
+                case 'meet-results':
+                    echo "tis";
+                    $this->processMeetResults($newFilePath);
                 break;
             }
         } catch (Exception $e) {
@@ -62,7 +64,12 @@ class UploadFileController extends Controller {
         }
         die();
     }
+<<<<<<< HEAD
     public function processMeetProgramFile($file, $meet_id) {
+=======
+    public function processMeetProgramFile($file) {
+        echo "kwdkwdknda";
+>>>>>>> 7e652d99e952539ed64303e490683bfda9ca446b
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
@@ -114,6 +121,7 @@ class UploadFileController extends Controller {
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
+<<<<<<< HEAD
 
                         if (stripos($data[0], "Relay") !== false) {
                             echo "this is a relay event </br>";
@@ -132,6 +140,12 @@ class UploadFileController extends Controller {
                 
                 var_dump($data);
                 
+=======
+                    $event = $data[0];
+                    echo "Event Name: $event" . PHP_EOL;
+
+                }
+>>>>>>> 7e652d99e952539ed64303e490683bfda9ca446b
                 echo "<hr />";
                 //first time you read the array with 7 element, it is your column header
             }
@@ -152,6 +166,45 @@ class UploadFileController extends Controller {
     
     }
 
+    public function processMeetResults($file) {
+        if  (!file_exists($file)) {
+        throw new Exception ("$file does not exist!");
+    }
+        $rows = Excel::load ($file)->get();
+        echo "<pre>";
+         $count = 0;  
+    	foreach ($rows as $row) {
+            $count++;
+            $data = array();
+            if (empty($row) || $count < 5) { continue; }
+            echo "Row $count" . PHP_EOL;
+            if ((stripos($data[0], "event") !== false) || (stripos($data[0],'name athletes') !== false) || (stripos($data[0],'age') !== false) || (stripos($data[0],'team') !== false) || (stripos($data[0],'seed time') !== false) || (stripos($data[0],'finals time') !== false) || (stripos($data[0],'points') !== false) ) {
+                    // This is an event heading row
+                    $event = $data[0];
+                    echo "Event Name: $event" . PHP_EOL;
+            }
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+            var_dump ($data);
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+
+
+
+=======
+>>>>>>> 3e9cced5fa28b6ac5f82551b2798bb6651a09d22
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
@@ -207,21 +260,17 @@ class UploadFileController extends Controller {
                 //process the swimmer data
                 //Check if the swimmer already exists, if so, then update; else insert
                 $name = explode(",",$data[1]);
-                $first_name = $name[1];
-                $last_name  = $name[0];
-                $gender     = $data[2];
-                $dob        = $data[4];
+                $swimmer_data = array(
+                    'first_name'    => $name[1],
+                    'last_name'     => $name[0],
+                    'gender'        => $data[2],
+                    'dob'           => $data[4],
+                    'team_id'       => $team_id
+                );
                 $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
                 if (sizeof($swimmer) == 0) { 
                     echo "Swimmer doesn't exist, let's insert ... " . PHP_EOL;
-                    $swimmer = new Swimmers;
-                    $swimmer->first_name    = $first_name;
-                    $swimmer->last_name     = $last_name;
-                    $swimmer->gender        = $gender;
-                    $swimmer->date_of_birth = date("Y-m-d", strtotime($dob));
-                    $swimmer->slug          = strtolower(str_replace(' ', '', $first_name) . "-" . str_replace(' ', '', $last_name));
-                    $swimmer->team_id       = $team_id;
-                    $swimmer->save();
+                    $this->_addSwimmer($data);
                     echo "...succesfully imported swimmer " . $swimmer->first_name . PHP_EOL;
                 }
                 
@@ -229,6 +278,18 @@ class UploadFileController extends Controller {
             echo "<hr />";
 	}
         echo "</pre>";
-    }
+    } 
+
+    private function _addSwimmer($data){ 
+        $swimmer = new Swimmers;
+        $swimmer->first_name    = $data['first_name'];
+        $swimmer->last_name     = $data['last_name'];
+        $swimmer->gender        = $data['gender'];
+        $swimmer->date_of_birth = date("Y-m-d", strtotime($data['dob']));
+        $swimmer->slug          = strtolower(str_replace(' ', '', $data['first_name']) . "-" . str_replace(' ', '', $data['last_name']));
+        $swimmer->team_id       = $data['team_id'];
+        $swimmer->save();
+        return true;
+    } 
 
 }
