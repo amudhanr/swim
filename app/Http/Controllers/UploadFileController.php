@@ -10,6 +10,7 @@ use App\Meets;
 use App\Swimmers;
 use App\Teams;
 use App\Days;
+use App\Events;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -97,6 +98,7 @@ class UploadFileController extends Controller {
                 $nameData = (explode(" ", $data[0]));
                 $name = $nameData[3] . " " . $nameData[4];
                 echo "this is days " . $name . "</br>";
+                $day = Days::where('name', $name)->where('meets_id', $meet_id)->first();
                 if (sizeof($day) == 0) {
                     $day = new Days;
                     $day->name = $name;
@@ -106,18 +108,31 @@ class UploadFileController extends Controller {
                     $day->youtube_link = null;
                     $day->save();
                     echo "Days " . $name . " is created</br>";
-                    $days_id = $day->id;
-                    echo "Days id is " . $days_id;
                 } 
-                $day = Days::where('name', $name)->where('meets_id', $meet_id)->get();
-                    $days_id = $day->id;
-                    echo "Days id is " . $days_id;
+                $days_id = $day->id;
+                echo "Days id is " . $days_id;
             } 
 
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
-
+                    if (stripos($data[0], "Boys") !== false) {
+                        $gender = 'M';
+                    } else {
+                        $gender = 'F';
+                    } 
+                    
+                    $event = Events::where('name', $data[0])->first();
+                    if (sizeof($event) == 0) {
+                        $event = new Events;
+                        $event->name = $data[0];
+                        $event->gender = $gender;
+                        $event->days_id = $days_id;
+                        $event->slug = strtolower(str_replace(' ', '', $data[0]));
+                        $event->save();
+                        echo "Event " . $data[0] . " has been created.";
+                    }
+                    var_dump($event);
                         if (stripos($data[0], "Relay") !== false) {
                             echo "this is a relay event </br>";
                             $relay = true;
@@ -134,8 +149,6 @@ class UploadFileController extends Controller {
                 }
                 
                 var_dump($data);                
-                    $event = $data[0];
-                    echo "Event Name: $event" . PHP_EOL;
 
                 }
                 echo "<hr />";
