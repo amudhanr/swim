@@ -165,21 +165,17 @@ class UploadFileController extends Controller {
                 //process the swimmer data
                 //Check if the swimmer already exists, if so, then update; else insert
                 $name = explode(",",$data[1]);
-                $first_name = $name[1];
-                $last_name  = $name[0];
-                $gender     = $data[2];
-                $dob        = $data[4];
+                $swimmer_data = array(
+                    'first_name'    => $name[1],
+                    'last_name'     => $name[0],
+                    'gender'        => $data[2],
+                    'dob'           => $data[4],
+                    'team_id'       => $team_id
+                );
                 $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
                 if (sizeof($swimmer) == 0) { 
                     echo "Swimmer doesn't exist, let's insert ... " . PHP_EOL;
-                    $swimmer = new Swimmers;
-                    $swimmer->first_name    = $first_name;
-                    $swimmer->last_name     = $last_name;
-                    $swimmer->gender        = $gender;
-                    $swimmer->date_of_birth = date("Y-m-d", strtotime($dob));
-                    $swimmer->slug          = strtolower(str_replace(' ', '', $first_name) . "-" . str_replace(' ', '', $last_name));
-                    $swimmer->team_id       = $team_id;
-                    $swimmer->save();
+                    $this->_addSwimmer($data);
                     echo "...succesfully imported swimmer " . $swimmer->first_name . PHP_EOL;
                 }
                 
@@ -187,6 +183,18 @@ class UploadFileController extends Controller {
             echo "<hr />";
 	}
         echo "</pre>";
-    }
+    } 
+
+    private function _addSwimmer($data){ 
+        $swimmer = new Swimmers;
+        $swimmer->first_name    = $data['first_name'];
+        $swimmer->last_name     = $data['last_name'];
+        $swimmer->gender        = $data['gender'];
+        $swimmer->date_of_birth = date("Y-m-d", strtotime($data['dob']));
+        $swimmer->slug          = strtolower(str_replace(' ', '', $data['first_name']) . "-" . str_replace(' ', '', $data['last_name']));
+        $swimmer->team_id       = $data['team_id'];
+        $swimmer->save();
+        return true;
+    } 
 
 }
