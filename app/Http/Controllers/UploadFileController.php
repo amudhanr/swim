@@ -50,7 +50,7 @@ class UploadFileController extends Controller {
                     $this->processAthleteFile($newFilePath); 
                 break;
                 case 'meet-program':
-                    $this->processMeetProgramFile($newFilePath);
+                    $this->processMeetProgramFile($newFilePath, $request->meets);
                 break;
                 case 'meet-result':
                 break;
@@ -62,19 +62,18 @@ class UploadFileController extends Controller {
         }
         die();
     }
-    public function processMeetProgramFile($file) {
+    public function processMeetProgramFile($file, $meet_id) {
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
 	    die ();
-        	}
+        }
 
         //check to see if the columns match what you are looking for
 	$rows = Excel::load($file)->get();
-        
         echo "<pre>";
         $count = 0;
-        $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+        $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
 	foreach ($rows as $row) {
             $count++;
 
@@ -83,24 +82,56 @@ class UploadFileController extends Controller {
             
             echo "line " . $count . "</br>";
             
-            if ($count == 3) {
-                echo "this is days </br>";
-            }           
             
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
             }
+
+            if ($count == 3) {
+                $nameData = (explode(" ", $data[0]));
+                $name = $nameData[3] . " " . $nameData[4];
+                echo "this is days " . $name . "</br>";
+                $day = Days::where("name", $name)->where("meets_id", $meet_id)->first();
+                if (sizeof($day) == 0) {
+                    $day = new Days;
+                    $day->name = $name;
+                    $day->meets_id = $meet_id;
+                    $day->date = null;
+                    $day->slug = null;
+                    $day->youtube_link = null;
+                    $day->save();
+                    echo "Days " . $name . " is created</br>";
+                    $days_id = $day->id;
+                    echo "Days id is " . $days_id;
+                } else {
+                    $days_id = $day->id;
+                    echo "Days id is " . $days_id;
+                }
+            } 
+
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
-                    echo "this is an event </br>";
+
+                        if (stripos($data[0], "Relay") !== false) {
+                            echo "this is a relay event </br>";
+                            $relay = true;
+                        }
+                        
+                        else {
+                            echo "this is an non -relay event </br>";
+                            $relay = false;
+                        }
+
                 }
                 elseif(sizeof($data) == 7 && stripos($data[5], "_") !== false) {
                     echo "this is a lane data </br>";
                 }
+                
                 var_dump($data);
+                
                 echo "<hr />";
                 //first time you read the array with 7 element, it is your column header
             }
