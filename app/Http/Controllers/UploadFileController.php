@@ -115,7 +115,6 @@ class UploadFileController extends Controller {
     
     }
 
-<<<<<<< HEAD
     public function processMeetResults($file) {
         if  (!file_exists($file)) {
         throw new Exception ("$file does not exist!");
