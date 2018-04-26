@@ -17,7 +17,9 @@ class MeetsController extends Controller
      */
     public function index()
     {
-        //
+	$meets = Meets::all();
+        return view('meets.index', ['meets' => $meets]);//
+        return view('meets.index'); 
     }
 
     /**
@@ -59,8 +61,7 @@ class MeetsController extends Controller
         $meets->hosts_id = $validatedData['hosts'];
         $meets->save();
 
-        return "DONE!";
-        //
+        return Redirect::to('/admin/meets/');
     }
 
     /**

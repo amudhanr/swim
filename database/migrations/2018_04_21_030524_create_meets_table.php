@@ -13,14 +13,14 @@ class CreateMeetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('meets', function (Blueprint $table) {
-            $table->increments('id');
+            Schema::create('meets', function (Blueprint $table) {
+            $table->increments('id')->nullable();
 	    $table->string('name');
-            $table->date('start_date');
-	    $table->date('end_date');
+            $table->date('start_date')->nullable();
+	    $table->date('end_date')->nullable();
 	    $table->integer('hosts_id')->unsigned();
 	    $table->foreign('hosts_id')->references('id')->on('hosts');
-	    $table->string('slug', 50);
+	    $table->string('slug', 50)->nullable();
 	    $table->timestamps();
         });
     }
