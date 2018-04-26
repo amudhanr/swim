@@ -142,18 +142,10 @@ class UploadFileController extends Controller {
     
     
     
-    
-    
-    
-    
-    
-    
     }
 
 
 
-=======
->>>>>>> 3e9cced5fa28b6ac5f82551b2798bb6651a09d22
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
