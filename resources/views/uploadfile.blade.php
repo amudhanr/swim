@@ -1,15 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
-<script>
-    $(".meets").change(function(){
-    var str = "";
-    $( "select option:selected" ).each(function() {
-      str += $( this ).text() + " ";
-    });
-    $( "div" ).text( str );
-  })
-  .change();
+<script type="text/javascript">
+$(".meets").change(function(){
+  
+      alert("sdafasdfsa");
+    }
+
 </script>
 <div class="container">
     <div class="panel panel-warning">
@@ -19,7 +15,7 @@
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
                 <label for="meets">Meet Name:</label>
-                {!! Form::select('meets', $meets, null, array('class' => "form-control meets", 'selected =>"selected")); !!}
+                {!! Form::select('meets', $meets, null, array('class' => "form-control meets", 'selected' => "selected")); !!}
             </div> 
             <div id="day"><b>No meet is selected...</b></div>
             

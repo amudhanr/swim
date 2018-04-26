@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             <label for="hosts">Host Location</label>
-	    {!! Form::select('hosts', $hosts, {{ old('hosts') }}, array('class' => "form-control")) !!}
+	    {!! Form::select("hosts", $hosts, null, array('class' => 'form-control')) !!}
         </div>
       <div class="form-group">
           {!! Form::submit('Add Meet', array('class' => 'btn btn-primary')); !!}
