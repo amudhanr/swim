@@ -14,7 +14,7 @@ $(".meets").change(function(){
             {!! Form::open(array('url' => '/uploadfile','files'=>'true','class' => '')); !!} 
             {!! Form::text("filetype", "athletes", array('hidden' => 'hidden')); !!} 
             <div class="form-group">
-                <label for="meets">Meet Name: $meets</label>
+                <label for="meets">Meet Name:</label>
                 {!! Form::select('meets', $meets, null, array('class' => "form-control meets", 'selected' => "selected")); !!}
             </div> 
             <div id="day"><b>No meet is selected...</b></div>
