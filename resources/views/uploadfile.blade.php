@@ -2,17 +2,10 @@
 @section('content')
 <script type="text/javascript">
 $(".meets").change(function(){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      return this;
+  
+      alert("sdafasdfsa");
     }
-  };
-  xmlhttp.open("GET", "cd_catalog.xml", true);
-  xmlhttp.send();
-}
 
-});
 </script>
 <div class="container">
     <div class="panel panel-warning">

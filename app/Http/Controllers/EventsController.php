@@ -20,7 +20,7 @@ class EventsController extends Controller
             $events[$day->date][] = Days::find($day->id)->events;
             $daysData[$day->date] = $day;
         }
-	return view('meets.index', ['events' => $events, 'days' => $daysData, 'meet' => $meet]);
+	return view('events.index', ['events' => $events, 'days' => $daysData, 'meet' => $meet]);
     }
 
     public function event($event_id) {
