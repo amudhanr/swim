@@ -52,7 +52,9 @@ class UploadFileController extends Controller {
                 case 'meet-program':
                     $this->processMeetProgramFile($newFilePath);
                 break;
-                case 'meet-result':
+                case 'meet-results':
+                    echo "tis";
+                    $this->processMeetResults($newFilePath);
                 break;
             }
         } catch (Exception $e) {
@@ -63,6 +65,7 @@ class UploadFileController extends Controller {
         die();
     }
     public function processMeetProgramFile($file) {
+        echo "kwdkwdknda";
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
@@ -88,8 +91,10 @@ class UploadFileController extends Controller {
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
+                    $event = $data[0];
+                    echo "Event Name: $event" . PHP_EOL;
+
                 }
-                var_dump($data);
                 echo "<hr />";
                 //first time you read the array with 7 element, it is your column header
             }
@@ -109,6 +114,44 @@ class UploadFileController extends Controller {
     	echo $request;
     
     }
+
+    public function processMeetResults($file) {
+        if  (!file_exists($file)) {
+        throw new Exception ("$file does not exist!");
+    }
+        $rows = Excel::load ($file)->get();
+        echo "<pre>";
+         $count = 0;  
+    	foreach ($rows as $row) {
+            $count++;
+            $data = array();
+            if (empty($row) || $count < 5) { continue; }
+            echo "Row $count" . PHP_EOL;
+            if ((stripos($data[0], "event") !== false) || (stripos($data[0],'name athletes') !== false) || (stripos($data[0],'age') !== false) || (stripos($data[0],'team') !== false) || (stripos($data[0],'seed time') !== false) || (stripos($data[0],'finals time') !== false) || (stripos($data[0],'points') !== false) ) {
+                    // This is an event heading row
+                    $event = $data[0];
+                    echo "Event Name: $event" . PHP_EOL;
+            }
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+            var_dump ($data);
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+
+
+
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
