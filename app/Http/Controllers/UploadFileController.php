@@ -175,12 +175,15 @@ class UploadFileController extends Controller {
         if  (!file_exists($file)) {
         throw new Exception ("$file does not exist!");
     }
+        $count = 1;
+        $days_id = null;
         $rows = Excel::load ($file)->get();
         echo "<pre>";
          $count = 0;  
     	foreach ($rows as $row) {
             $count++;
             $data = array();
+            /*
             if (empty($row) || $count < 5) { continue; }
             echo "Row $count" . PHP_EOL;
             if ((stripos($data[0], "event") !== false) || (stripos($data[0],'name athletes') !== false) || (stripos($data[0],'age') !== false) || (stripos($data[0],'team') !== false) || (stripos($data[0],'seed time') !== false) || (stripos($data[0],'finals time') !== false) || (stripos($data[0],'points') !== false) ) {
@@ -192,6 +195,10 @@ class UploadFileController extends Controller {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
+            }*/
+            foreach ($row as $col) {
+                if (empty($col)) { continue; } 
+                $data[] = $col;
             }
             var_dump ($data);
         }
@@ -200,8 +207,29 @@ class UploadFileController extends Controller {
     
     }
 
+            if (($count > 2) && ($count == 3)) {
+                echo "this is a days data</br>";
+                $daysData = explode(" ",$data[0]);
+                $name = $daysData[2] . " " . $daysData[3];
+                $days = Days::where('name', $name)->first();
+                $days_id = $days->id;
+                echo "DAYS ID: " . $days_id "</br>";
 
+            } elseif ((stripos($data[0], "Event") !== false) && (stripos($data[0], "Relay") !== false)) {
+                echo "this is a relay event data</br>";
+            
+            } elseif ((stripos($data[0], "Event") !== false) && (stripos($data[0], "Relay") == false)) {
+                echo "this is a non-relay event data</br>";
+            
+            } elseif (sizeof($data) == 7) {
+                echo "this is a lane data</br>";
+            
+            }
 
+                
+            var_dump($data) . PHP_EOL;
+        }
+    }
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
