@@ -9,6 +9,7 @@ use Excel;
 use App\Meets;
 use App\Swimmers;
 use App\Teams;
+use App\Days;
 
 class UploadFileController extends Controller {
     public function index(){
@@ -64,12 +65,8 @@ class UploadFileController extends Controller {
         }
         die();
     }
-<<<<<<< HEAD
     public function processMeetProgramFile($file, $meet_id) {
-=======
-    public function processMeetProgramFile($file) {
         echo "kwdkwdknda";
->>>>>>> 7e652d99e952539ed64303e490683bfda9ca446b
         //check if the file exists
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
@@ -100,7 +97,6 @@ class UploadFileController extends Controller {
                 $nameData = (explode(" ", $data[0]));
                 $name = $nameData[3] . " " . $nameData[4];
                 echo "this is days " . $name . "</br>";
-                $day = Days::where("name", $name)->where("meets_id", $meet_id)->first();
                 if (sizeof($day) == 0) {
                     $day = new Days;
                     $day->name = $name;
@@ -112,16 +108,15 @@ class UploadFileController extends Controller {
                     echo "Days " . $name . " is created</br>";
                     $days_id = $day->id;
                     echo "Days id is " . $days_id;
-                } else {
+                } 
+                $day = Days::where('name', $name)->where('meets_id', $meet_id)->get();
                     $days_id = $day->id;
                     echo "Days id is " . $days_id;
-                }
             } 
 
             if (!empty($data)) {
                 if (stripos($data[0], "event") !== false) {
                     // This is an event heading row
-<<<<<<< HEAD
 
                         if (stripos($data[0], "Relay") !== false) {
                             echo "this is a relay event </br>";
@@ -138,18 +133,15 @@ class UploadFileController extends Controller {
                     echo "this is a lane data </br>";
                 }
                 
-                var_dump($data);
-                
-=======
+                var_dump($data);                
                     $event = $data[0];
                     echo "Event Name: $event" . PHP_EOL;
 
                 }
->>>>>>> 7e652d99e952539ed64303e490683bfda9ca446b
                 echo "<hr />";
                 //first time you read the array with 7 element, it is your column header
             }
-	}
+	
         echo "</pre>";
         //loop through each line of the file and extract data into an ac function postUploadCsv()
    
@@ -206,7 +198,7 @@ class UploadFileController extends Controller {
         echo "<pre>";
         $count = 0;
         $team = true;
-        $swimmer_id = $team_name = $name = $sex_id = $age_id = $birth_id = null;
+        $swimmer_id = $first_name = $last_name = $team_name = $name = $sex_id = $age_id = $birth_id = null;
 	foreach ($rows as $row) {
             $count++;
             $data = array();
@@ -248,7 +240,7 @@ class UploadFileController extends Controller {
                 } else { 
                     $team = false; 
                 }
-            } elseif (sizeof($data) == 5) {
+            } elseif ((sizeof($data) == 5) && (stripos($data[1], 'name') == false)) {
                 //process the swimmer data
                 //Check if the swimmer already exists, if so, then update; else insert
                 $name = explode(",",$data[1]);
@@ -259,11 +251,13 @@ class UploadFileController extends Controller {
                     'dob'           => $data[4],
                     'team_id'       => $team_id
                 );
+                $first_name = $swimmer_data['first_name'];
+                $last_name = $swimmer_data['last_name'];
                 $swimmer = Swimmers::where('first_name', $first_name)->where('last_name', $last_name)->get();
                 if (sizeof($swimmer) == 0) { 
                     echo "Swimmer doesn't exist, let's insert ... " . PHP_EOL;
                     $this->_addSwimmer($data);
-                    echo "...succesfully imported swimmer " . $swimmer->first_name . PHP_EOL;
+                    echo "...succesfully imported swimmer " . $swimmer_data->first_name . PHP_EOL;
                 }
                 
             }
