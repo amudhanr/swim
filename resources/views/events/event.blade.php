@@ -15,17 +15,7 @@
         <th> Position </th>
     </tr>
  </thead>
- <tbody>
-    <tr>
-            <td> 4 </td>
-        <td> Jun Seon Hong </td>
-        <td> 18 </td>
-        <td> Bandung Alliance Intercultural School </td>
-        <td> 01:03:34 </td>
-        <td> 01:00:00 </td>
-        <td> 1 </td>
-    </tr>
-   </tbody>
+ 
  </table>
 </div>
                                  

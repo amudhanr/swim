@@ -17,7 +17,7 @@ class CreateDaysTable extends Migration
 	    $table->integer('meets_id')->unsigned();
 	    $table->foreign('meets_id')->references('id')->on('meets');
             $table->string('youtube_link')->nullable();
-	    $table->date('date');
+	    $table->date('date')->nullable();
 	    $table->string('slug', 50)->nullable();
             $table->timestamps();
         });
