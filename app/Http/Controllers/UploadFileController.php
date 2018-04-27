@@ -128,7 +128,7 @@ class UploadFileController extends Controller {
                         $event->name = $data[0];
                         $event->gender = $gender;
                         $event->days_id = $days_id;
-                        $event->slug = strtolower(str_replace(' ', '', $data[0]));
+                        $event->slug = substr(strtolower(str_replace(' ', '', $data[0])), 49);
                         $event->save();
                         echo "Event " . $data[0] . " has been created.";
                     }
@@ -144,26 +144,29 @@ class UploadFileController extends Controller {
                         }
 
                 }
-                elseif(sizeof($data) == 7 && stripos($data[5], "_") !== false) {
-                    echo "this is a lane data </br>";
-                }
-                
-                var_dump($data);                
+                elseif(($count > 8 ) && (sizeof($data) == 7) && (stripos($data[5], "_") !== false)) {
+                    echo "this is a lane data</br>";
+                    if($relay == false) {
+                        
+                        $nameData = explode(",",$data[1]);
+                        $name = $nameData[1] . " " . $nameData[0];
+                        $age = $data[2];
 
+                        $swimmerData = Swimmers::where("name", $name)->where("age", $age)->first();
+                        if (sizeof($swimmerData) == 0) {
+                            echo "swimmer not found, please add to database</br>";
+                        } else {
+                            echo "swimmer " . $swimmerData->name . " identified </br>";
+                        }
                 }
+                }
+            }
+                var_dump($data);                
                 echo "<hr />";
-                //first time you read the array with 7 element, it is your column header
             }
 	
-        echo "</pre>";
-        //loop through each line of the file and extract data into an ac function postUploadCsv()
-   
+        echo "</pre>";   
 	
-            // check for duplicate entry, if duplicate then update the existing record
-            
-
-        // q
-            // if not duplicate the insert into the approprate tables
 
     } 
     public function ajax(Request $request){
@@ -200,8 +203,6 @@ class UploadFileController extends Controller {
                 if (empty($col)) { continue; } 
                 $data[] = $col;
             }
-            var_dump ($data);
-        }
     
     
     
@@ -213,7 +214,7 @@ class UploadFileController extends Controller {
                 $name = $daysData[2] . " " . $daysData[3];
                 $days = Days::where('name', $name)->first();
                 $days_id = $days->id;
-                echo "DAYS ID: " . $days_id "</br>";
+                echo "DAYS ID: " . $days_id . "</br>";
 
             } elseif ((stripos($data[0], "Event") !== false) && (stripos($data[0], "Relay") !== false)) {
                 echo "this is a relay event data</br>";
@@ -229,7 +230,6 @@ class UploadFileController extends Controller {
                 
             var_dump($data) . PHP_EOL;
         }
-    }
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
