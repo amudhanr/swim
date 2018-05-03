@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 use App\Days;
+use App\Meets;
 use Illuminate\Http\Request;
+use Validator;
+use Redirect;
 class DaysController extends Controller
 {
     /**
@@ -19,30 +22,30 @@ class DaysController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    
     {
-        return view('days.create');//
+	$meets = Meets::pluck('name','id');
+        return view('days.create', ['meets' => $meets]);
     }
 
     public function store(Request $request)
      {
-         $validator = Validator::make($request->all(), [
-             'name'     => 'required', 
-             'address'  => 'required|string|max:190'
-         ]);  
-            if ($validator->fails())  {
-                return Redirect::to('/admin/days/create')
-                    ->withErrors($validator)
-                    ->withInput();
+        $validator = Validator::make($request->all(), [
+            'name'     => 'required', 
+            'meets_id'  => 'required'
+        ]);  
+        if ($validator->fails())  {
+            return Redirect::to('/admin/days/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-            }
-
-        $validatedData = $request->all(); 
-	$days = new Day;
+        $validatedData  = $request->all(); 
+	$days           = new Days;
   	$days->meets_id = $validatedData['meets_id'];
+        $days->name     = ucwords(strtolower($validatedData['name']));
+        $days->slug     = str_replace(' ', '-', preg_replace('/\s+/', ' ', $days->name));
 	$days->youtube_link	= $validatedData['youtube_link']; 
-	$days->date = $validatedData['date']; 
-	$days->slug = $validatedData['slug']; 
+	$days->date = date("Y-m-d", strtotime($validatedData['date'])); 
 	  
 	$days->save;
 	return "DONE!";
