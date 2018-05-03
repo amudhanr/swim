@@ -13,4 +13,8 @@ class Days extends Model
     public function events() {
         return $this->hasMany('App\Events');
     }
+
+    public function setSlugAttribute($value) {
+        $this->attributes['slug'] = strtolower(str_replace(' ', '-', preg_replace('/\s+/', ' ', $value)));
+    }
 }
