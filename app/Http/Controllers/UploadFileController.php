@@ -186,7 +186,7 @@ class UploadFileController extends Controller {
     	foreach ($rows as $row) {
             $count++;
             $data = array();
-            /*
+            
             if (empty($row) || $count < 5) { continue; }
             echo "Row $count" . PHP_EOL;
             if ((stripos($data[0], "event") !== false) || (stripos($data[0],'name athletes') !== false) || (stripos($data[0],'age') !== false) || (stripos($data[0],'team') !== false) || (stripos($data[0],'seed time') !== false) || (stripos($data[0],'finals time') !== false) || (stripos($data[0],'points') !== false) ) {
@@ -194,11 +194,12 @@ class UploadFileController extends Controller {
                     $event = $data[0];
                     echo "Event Name: $event" . PHP_EOL;
             }
+	    $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
             foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
-            }*/
+            }
             foreach ($row as $col) {
                 if (empty($col)) { continue; } 
                 $data[] = $col;
