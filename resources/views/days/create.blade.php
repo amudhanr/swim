@@ -3,13 +3,16 @@
 @section('content')
 <div class="container">
   <div class="row">
+<<<<<<< HEAD
     <form method="post" action="/admin/days/create">
 
 
+=======
+>>>>>>> 52114acb12af5239a4054b96988bcac30bf2a52a
   {!! Form::open(array('url' => '/admin/days/','class' => 'form-horizontal')); !!} 
     <div class="form-group">
-	<label for="id"> Enter ID</label>
-	<input type="text" name="id" id="id" placeholder="Enter ID" class="form-control">
+	<label for="name"> Name</label>
+	<input type="text" name="name" id="name" placeholder="Insert Name" class="form-control">
       </div>
 
     <div class="form-group">

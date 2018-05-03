@@ -2,13 +2,10 @@
 @section('content')
 <script type="text/javascript">
 $(".meets").change(function(){
-    var str ="";
-        $("select option:selected").each (function() {
-            str += $(this).text() + " ";
-        });
-        $( "div" ).text( str );
-    ])
-});
+  
+      alert("sdafasdfsa");
+    }
+
 </script>
 <div class="container">
     <div class="panel panel-warning">
