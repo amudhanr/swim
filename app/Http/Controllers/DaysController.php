@@ -14,7 +14,7 @@ class DaysController extends Controller
      */
     public function index()
     {
-        //
+        
     }
     /**
      * Show the form for creating a new resource.
@@ -42,13 +42,11 @@ class DaysController extends Controller
         $validatedData  = $request->all(); 
 	$days           = new Days;
   	$days->meets_id = $validatedData['meets_id'];
-        $days->name     = ucwords(strtolower($validatedData['name']));
-        $days->slug     = str_replace(' ', '-', preg_replace('/\s+/', ' ', $days->name));
+        $days->name = $days->slug = ucwords(strtolower($validatedData['name']));
 	$days->youtube_link	= $validatedData['youtube_link']; 
 	$days->date = date("Y-m-d", strtotime($validatedData['date'])); 
 	  
-	$days->save;
-	return "DONE!";
+	$days->save();
 	
     }
     /**
