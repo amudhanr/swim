@@ -231,7 +231,7 @@ class UploadFileController extends Controller {
                 
             var_dump($data) . PHP_EOL;
         }
-	 public function processMeetResults($file, $meet_id) {
+public function processMeetResults($file, $meet_id) {
         echo "kwdkwdknda";
         //check if the file exists
         if (!file_exists($file)) {
@@ -243,6 +243,7 @@ class UploadFileController extends Controller {
 	$rows = Excel::load($file)->get();
         echo "<pre>";
         $count = 0;
+	$eventCount = 0;
         $relay = $events_id = $swimmers_id = $age_id = $teams_id = $seeds_id = $finals_id = $points_id = null;
 	foreach ($rows as $row) {
             $count++;
@@ -251,14 +252,15 @@ class UploadFileController extends Controller {
             if (empty($row)) { continue; }
             
             echo "line " . $count . "</br>";
-            
-            
-            foreach ($row as $col) {
+	
+      	   foreach ($row as $col) {
                 //skip empty columns
                 if (empty($col)) { continue; }
                 $data[] = $col;
+		echo $col;
+		if ($col == "Name") {$eventCount=true;}
             }
-
+	}
             if ($count == 3) {
                 $nameData = (explode(" ", $data[0]));
                 $name = $nameData[3] . " " . $nameData[4];
