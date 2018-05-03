@@ -231,6 +231,106 @@ class UploadFileController extends Controller {
                 
             var_dump($data) . PHP_EOL;
         }
+	 public function processMeetResults($file, $meet_id) {
+        echo "kwdkwdknda";
+        //check if the file exists
+        if (!file_exists($file)) {
+            throw new Exception("$file does not exist!");
+	    die ();
+        }
+
+        //check to see if the columns match what you are looking for
+	$rows = Excel::load($file)->get();
+        echo "<pre>";
+        $count = 0;
+        $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+	foreach ($rows as $row) {
+            $count++;
+
+            $data = array();
+            if (empty($row)) { continue; }
+            
+            echo "line " . $count . "</br>";
+            
+            
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+
+            if ($count == 3) {
+                $nameData = (explode(" ", $data[0]));
+                $name = $nameData[3] . " " . $nameData[4];
+                echo "this is days " . $name . "</br>";
+                $day = Days::where('name', $name)->where('meets_id', $meet_id)->first();
+                if (sizeof($day) == 0) {
+                    $day = new Days;
+                    $day->name = $name;
+                    $day->meets_id = $meet_id;
+                    $day->date = null;
+                    $day->slug = null;
+                    $day->youtube_link = null;
+                    $day->save();
+                    echo "Days " . $name . " is created</br>";
+                } 
+                $days_id = $day->id;
+                echo "Days id is " . $days_id;
+            } 
+
+            if (!empty($data)) {
+                if (stripos($data[0], "event") !== false) {
+                    // This is an event heading row
+                    if (stripos($data[0], "Boys") !== false) {
+                        $gender = 'M';
+                    } else {
+                        $gender = 'F';
+                    } 
+                    
+                    $event = Events::where('name', $data[0])->first();
+                    if (sizeof($event) == 0) {
+                        $event = new Events;
+                        $event->name = $data[0];
+                        $event->gender = $gender;
+                        $event->days_id = $days_id;
+                        $event->slug = substr(strtolower(str_replace(' ', '', $data[0])), 49);
+                        $event->save();
+                        echo "Event " . $data[0] . " has been created.";
+                    }
+                    var_dump($event);
+                        if (stripos($data[0], "Relay") !== false) {
+                            echo "this is a relay event </br>";
+                            $relay = true;
+                        }
+                        
+                        else {
+                            echo "this is an non -relay event </br>";
+                            $relay = false;
+                        }
+
+                }
+                elseif(($count > 8 ) && (sizeof($data) == 7) && (stripos($data[5], "_") !== false)) {
+                    echo "this is a lane data</br>";
+                    if($relay == false) {
+                        
+                        $nameData = explode(",",$data[1]);
+                        $name = $nameData[1] . " " . $nameData[0];
+                        $age = $data[2];
+
+                        $swimmerData = Swimmers::where("name", $name)->where("age", $age)->first();
+                        if (sizeof($swimmerData) == 0) {
+                            echo "swimmer not found, please add to database</br>";
+                        } else {
+                            echo "swimmer " . $swimmerData->name . " identified </br>";
+                        }
+                }
+                }
+            }
+                var_dump($data);                
+                echo "<hr />";
+            }
+	
+        echo "</pre>";   
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
