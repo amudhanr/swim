@@ -231,6 +231,7 @@ class UploadFileController extends Controller {
                 
             var_dump($data) . PHP_EOL;
         }
+
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
