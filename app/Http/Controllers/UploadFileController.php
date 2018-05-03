@@ -247,6 +247,23 @@ class UploadFileController extends Controller {
     	foreach ($rows as $row) {
             $count++;
             $data = array();
+<<<<<<< HEAD
+=======
+            
+            if (empty($row) || $count < 5) { continue; }
+            echo "Row $count" . PHP_EOL;
+            if ((stripos($data[0], "event") !== false) || (stripos($data[0],'name athletes') !== false) || (stripos($data[0],'age') !== false) || (stripos($data[0],'team') !== false) || (stripos($data[0],'seed time') !== false) || (stripos($data[0],'finals time') !== false) || (stripos($data[0],'points') !== false) ) {
+                    // This is an event heading row
+                    $event = $data[0];
+                    echo "Event Name: $event" . PHP_EOL;
+            }
+	    $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+            foreach ($row as $col) {
+                //skip empty columns
+                if (empty($col)) { continue; }
+                $data[] = $col;
+            }
+>>>>>>> 8211f845adaf960c9223637c2d176c73c2d723de
             foreach ($row as $col) {
                 if (empty($col)) { continue; } 
                 $data[] = $col;
@@ -289,9 +306,13 @@ class UploadFileController extends Controller {
                 
             var_dump($data) . PHP_EOL;
         }
+<<<<<<< HEAD
     
     }
     
+=======
+
+>>>>>>> 8211f845adaf960c9223637c2d176c73c2d723de
     public function processAthleteFile($file) {
         if (!file_exists($file)) {
             throw new Exception("$file does not exist!");
