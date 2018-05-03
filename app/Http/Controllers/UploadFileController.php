@@ -243,7 +243,7 @@ class UploadFileController extends Controller {
 	$rows = Excel::load($file)->get();
         echo "<pre>";
         $count = 0;
-        $relay = $swimmers_id = $days_id = $heats_id = $events_id = $teams_id = $days_id = null;
+        $relay = $events_id = $swimmers_id = $age_id = $teams_id = $seeds_id = $finals_id = $points_id = null;
 	foreach ($rows as $row) {
             $count++;
 
