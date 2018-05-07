@@ -30,8 +30,10 @@ class DaysController extends Controller
     public function store(Request $request)
      {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required', 
-            'meets_id'  => 'required'
+            'name'          => 'required', 
+            'meets_id'      => 'required',
+            'date'          => 'required|date|max:12',
+            'youtube_link'  => 'url'
         ]);  
         if ($validator->fails())  {
             return Redirect::to('/admin/days/create')

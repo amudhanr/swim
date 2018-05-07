@@ -46,7 +46,7 @@ class MeetsController extends Controller
             'slug'           => 'required|max:50|string', 
             'start_date'     => 'required|max:10|date', 
             'end_date'       => 'required|max:10|date', 
-       ]); 
+        ]); 
         if ($validator->fails()) {
             return Redirect::to('/admin/meets/create')
           	  ->withErrors($validator)
