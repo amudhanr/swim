@@ -17,7 +17,6 @@ class CreateSwimmersTable extends Migration
             $table->string('last_name');
             $table->date('date_of_birth')->nullable();;
             $table->enum('gender', ['M', 'F']);
-            $table->integer('age')->unsigned()->nullable();
             $table->integer('team_id')->unsigned();
             $table->foreign('team_id')->references('id')->on('teams');
             $table->string('slug', 50)->nullable();
