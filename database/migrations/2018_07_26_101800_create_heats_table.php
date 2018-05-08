@@ -16,6 +16,7 @@ class CreateHeatsTable extends Migration
             $table->string('name');
             $table->integer('events_id')->unsigned();
             $table->foreign('events_id')->references('id')->on('events');
+            $table->enum('type', ['Prelims', 'A-Final', 'Timed Finals'])->nullable();
             $table->timestamps();
         });
     }

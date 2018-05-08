@@ -13,15 +13,17 @@ class CreateLanesTable extends Migration
     {
         Schema::create('lanes', function (Blueprint $table) {
             $table->increments('id');
-	          $table->integer('heats_id')->unsigned();
-	          $table->foreign('heats_id')->references('id')->on('heats');
+	    $table->integer('heats_id')->unsigned()->nullable();
+	    $table->foreign('heats_id')->references('id')->on('heats');
+	    $table->integer('events_id')->unsigned();
+	    $table->foreign('events_id')->references('id')->on('events');
             $table->tinyInteger('lane_number')->unsigned();
             $table->integer('swimmers_id')->unsigned();
             $table->foreign('swimmers_id')->references('id')->on('swimmers');
             $table->integer('seed_time')->unsigned()->nullable();
             $table->integer('time')->unsigned()->nullable();
-            $table->tinyInteger('position')->unsigned();
-            $table->tinyInteger('points')->unsigned()->default(0);
+            $table->tinyInteger('position')->unsigned()->nullable();
+            $table->tinyInteger('points')->unsigned()->nullable();
             $table->timestamps();
         });
     }
