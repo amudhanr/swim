@@ -49,7 +49,7 @@ class DaysController extends Controller
 	$days->date = date("Y-m-d", strtotime($validatedData['date'])); 
 	  
 	$days->save();
-	
+        return Redirect::to('admin/days/'); 	
     }
     /**
      * Display the specified resource.
