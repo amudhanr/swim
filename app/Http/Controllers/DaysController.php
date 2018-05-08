@@ -14,6 +14,8 @@ class DaysController extends Controller
      */
     public function index()
     {
+	$days = Days::all();
+        return view('days.index', ['days' => $days]);//
         
     }
     /**

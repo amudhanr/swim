@@ -19,7 +19,6 @@ class MeetsController extends Controller
     {
 	$meets = Meets::all();
         return view('meets.index', ['meets' => $meets]);//
-        return view('meets.index'); 
     }
 
     /**
